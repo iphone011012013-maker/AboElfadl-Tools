@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة قناع الروابط</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+            background-color: #f0f2f5;
+            direction: rtl;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #1c1e21;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #606770;
+            font-weight: 600;
+        }
+        input[type="url"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #28a745; /* لون أخضر */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .results-container {
+            margin-top: 25px;
+            display: none;
+            text-align: right;
+        }
+        .result-link {
+            direction: ltr;
+            text-align: left;
+            background-color: #f0f2f5;
+            padding: 12px;
+            border-radius: 8px;
+            word-wrap: break-word;
+            border: 1px solid #dddfe2;
+            cursor: pointer;
+            color: #1c1e21;
+            margin-bottom: 10px;
+        }
+        .copy-feedback {
+            color: #31a24c;
+            font-weight: bold;
+            display: none;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            text-align: left;
+            direction: ltr;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #28a745;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>أداة قناع الروابط (Link Cloaker)</h1>
+        
+        <div class="input-group">
+            <label for="longURL">الرابط الأصلي الذي تريد إخفاءه</label>
+            <input type="url" id="longURL" placeholder="مثال: https://to-web.netlify.app/?chatId=123&originalLink=...">
+        </div>
+
+        <div class="input-group">
+            <label for="cloakingDomain">النطاق الوهمي للقناع</label>
+            <input type="text" id="cloakingDomain" placeholder="مثال: secure-login.com (اتركه فارغًا للافتراضي)">
+        </div>
+
+        <button id="generateBtn">توليد الروابط المقنّعة</button>
+        <div class="loader" id="loader"></div>
+
+        <div class="results-container" id="resultsContainer">
+            <label>الروابط المقنّعة (جاهزة للنسخ):</label>
+            <div id="cloakedLinks"></div>
+        </div>
+    </div>
+
+    <script>
+        const generateBtn = document.getElementById('generateBtn');
+        const loader = document.getElementById('loader');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const cloakedLinksDiv = document.getElementById('cloakedLinks');
+
+        // خدمات اختصار الروابط
+        const shortenerAPIs = {
+            tinyurl: 'https://tinyurl.com/api-create.php?url=',
+            isgd: 'https://is.gd/create.php?format=simple&url=',
+            vgd: 'https://v.gd/create.php?format=simple&url='
+        };
+
+        async function shortenLink(service, longURL) {
+            try {
+                // استخدام بروكسي لتجنب مشاكل CORS
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const response = await fetch(proxyUrl + service + encodeURIComponent(longURL));
+                if (!response.ok) return null;
+                return await response.text();
+            } catch (error) {
+                console.error(`Error with ${service}:`, error);
+                return null;
+            }
+        }
+
+        generateBtn.addEventListener('click', async () => {
+            const longURL = document.getElementById('longURL').value.trim();
+            let cloakingDomain = document.getElementById('cloakingDomain').value.trim();
+
+            if (!longURL) {
+                alert('الرجاء إدخال الرابط الأصلي.');
+                return;
+            }
+            if (!cloakingDomain) {
+                cloakingDomain = "Net.app-Sigd"; // قيمة افتراضية إذا كان الحقل فارغًا
+            }
+
+            loader.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            cloakedLinksDiv.innerHTML = '';
+
+            let hasResults = false;
+            for (const [name, apiUrl] of Object.entries(shortenerAPIs)) {
+                const shortURL = await shortenLink(apiUrl, longURL);
+                if (shortURL && shortURL.startsWith('http')) {
+                    hasResults = true;
+                    const cloakedURL = `https://${cloakingDomain}@${shortURL.replace(/^(https?:\/\/)?/, '')}`;
+                    
+                    const linkDiv = document.createElement('div');
+                    linkDiv.className = 'result-link';
+                    linkDiv.title = 'اضغط للنسخ';
+                    linkDiv.textContent = cloakedURL;
+                    
+                    const feedbackDiv = document.createElement('div');
+                    feedbackDiv.className = 'copy-feedback';
+                    feedbackDiv.textContent = 'تم النسخ!';
+                    
+                    cloakedLinksDiv.appendChild(linkDiv);
+                    cloakedLinksDiv.appendChild(feedbackDiv);
+                }
+            }
+
+            loader.style.display = 'none';
+            if (hasResults) {
+                resultsContainer.style.display = 'block';
+            } else {
+                alert('حدث خطأ أثناء اختصار الروابط. يرجى المحاولة مرة أخرى.');
+            }
+        });
+
+        // إضافة وظيفة النسخ لجميع الروابط
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('result-link')) {
+                const textToCopy = e.target.textContent;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const feedback = e.target.nextElementSibling;
+                    if (feedback && feedback.classList.contains('copy-feedback')) {
+                        document.querySelectorAll('.copy-feedback').forEach(el => el.style.display = 'none');
+                        feedback.style.display = 'block';
+                        setTimeout(() => { feedback.style.display = 'none'; }, 2000);
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
+
