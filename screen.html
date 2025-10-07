@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>دقة الشاشة الخاصة بجهازك | AboElfadl tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="أداة لمعرفة دقة الشاشة الحالية لجهازك، عمق الألوان، ونسبة العرض إلى الارتفاع.">
+    <meta name="theme-color" content="#000000">
+    <base target="_top">
+
+    <style>
+        /* --- General Styles --- */
+        :root {
+            --primary-color: #000000; /* أسود */
+            --secondary-color: #ffba00; /* ذهبي */
+            --text-light: #ffffff;
+            --text-dark: #333;
+            --background-light: #f4f4f4;
+            --background-white: #fff;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: var(--background-light );
+            color: var(--text-dark);
+            font-weight: 700;
+            line-height: 1.9;
+        }
+        .wrapper {
+            margin: auto;
+            max-width: 1080px;
+            padding: 0 15px;
+        }
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #e6a800; /* درجة أغمق من الذهبي عند المرور */
+        }
+        h1, h2 {
+            margin: 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* --- Header --- */
+        header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 8px 0;
+            border-bottom: 5px solid var(--secondary-color);
+            height: 54px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+        }
+        header .wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        header h1 a {
+            color: var(--text-light);
+        }
+        .header-text-logo {
+            background: var(--secondary-color);
+            padding: 8px 12px;
+            color: var(--primary-color);
+            font-size: 16px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-top: -8px;
+            margin-bottom: -8px;
+            font-weight: bold;
+        }
+
+        /* --- Main Content --- */
+        .site-wrapper {
+            padding-top: 70px; /* Adjust for fixed header */
+        }
+        .box {
+            background: var(--background-white);
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+            border-radius: 5px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-red {
+            color: #a20808;
+        }
+        .result {
+            color: #005c29;
+        }
+
+        /* --- Screen Resolution Display --- */
+        .screen {
+            direction: ltr;
+            border: 2px solid var(--secondary-color);
+            color: var(--primary-color);
+            max-width: 400px;
+            display: inline-block;
+            padding: 20px;
+            background: #fff8e1; /* خلفية ذهبية فاتحة */
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .screen span {
+            font-size: 50px;
+        }
+        .screen span.separator {
+            color: var(--primary-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 20px;
+            border-top: 4px solid var(--secondary-color);
+            text-align: center;
+        }
+        footer a {
+            color: var(--secondary-color);
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="wrapper">
+            <a href="https://aboelfadl-tools.netlify.app/" class="header-text-logo">AboElfadl tools</a>
+            <h1><a href="https://aboelfadl-tools.netlify.app/screen" title="دقة الشاشة الخاصة بجهازك">دقة الشاشة الخاصة بجهازك</a></h1>
+        </div>
+    </header>
+
+    <div class="site-wrapper">
+        <div class="wrapper">
+            <main>
+                <div class="box text-center">
+                    <h2>دقة شاشتك الحالية</h2>
+                    <div class="screen">
+                        <span id="sWidth"></span>
+                        <span class="separator">X</span>
+                        <span id="sHeight"></span>
+                    </div>
+
+                    <h2>معلومات الشاشة (Screen Details )</h2>
+                    <p>
+                        العرض: <span id="sWidthInfo" class="text-red"></span> بكسل
+                          
+
+                        الارتفاع: <span id="sHeightInfo" class="text-red"></span> بكسل
+                          
+
+                        نسبة العرض إلى الارتفاع: <span id="sRatioInfo" class="result"></span>
+                          
+
+                        عمق الألوان: <span id="sColorDepth" class="result"></span> بت
+                    </p>
+                </div>
+
+                <div class="box">
+                    <h2 class="text-center">عن الأداة</h2>
+                    <p class="text-center">هذه أداة بسيطة تعرض أبعاد شاشتك الحالية بالبكسل، بالإضافة إلى نسبة العرض إلى الارتفاع وعمق الألوان المدعوم.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="wrapper">
+            &copy; 2025 | AboElfadl tools
+        </div>
+    </footer>
+
+    <script>
+        // Function to calculate the Greatest Common Divisor (GCD)
+        function gcd(a, b) {
+            return (b === 0) ? a : gcd(b, a % b);
+        }
+
+        // Function to update screen resolution info
+        function updateScreenInfo() {
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            const colorDepth = window.screen.colorDepth;
+
+            // Update the main display
+            document.getElementById('sWidth').textContent = screenWidth;
+            document.getElementById('sHeight').textContent = screenHeight;
+
+            // Update the detailed info
+            document.getElementById('sWidthInfo').textContent = screenWidth;
+            document.getElementById('sHeightInfo').textContent = screenHeight;
+            document.getElementById('sColorDepth').textContent = colorDepth;
+
+            // Calculate and update the aspect ratio
+            const ratio = gcd(screenWidth, screenHeight);
+            document.getElementById('sRatioInfo').textContent = screenWidth / ratio + ":" + screenHeight / ratio;
+        }
+
+        // Run the function when the page loads
+        document.addEventListener('DOMContentLoaded', updateScreenInfo);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ما هو عنوان IP الخاص بي؟ | AboElfadl tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="أداة مجانية لمعرفة عنوان IP العام الخاص بك وتحديد موقعك الجغرافي ومزود خدمة الإنترنت.">
+    <meta name="theme-color" content="#000000">
+    <base target="_top">
+
+    <style>
+        :root {
+            --primary-color: #000000; /* أسود */
+            --secondary-color: #ffba00; /* ذهبي */
+            --text-light: #ffffff;
+            --text-dark: #333;
+            --background-light: #f4f4f4;
+            --background-white: #fff;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            font-weight: 700;
+            line-height: 1.9;
+        }
+        .wrapper { margin: auto; max-width: 1080px; padding: 0 15px; }
+        a { color: var(--secondary-color); text-decoration: none; transition: color 0.3s; }
+        a:hover { color: #e6a800; }
+        h1, h2 { margin: 0; }
+
+        header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 8px 0;
+            border-bottom: 5px solid var(--secondary-color);
+            height: 54px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+        }
+        header .wrapper { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        header h1 a { color: var(--text-light); }
+        .header-text-logo {
+            background: var(--secondary-color);
+            padding: 8px 12px;
+            color: var(--primary-color);
+            font-size: 16px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-top: -8px;
+            margin-bottom: -8px;
+            font-weight: bold;
+        }
+
+        .site-wrapper { padding-top: 70px; }
+        .box {
+            background: var(--background-white);
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+            border-radius: 5px;
+        }
+        .text-center { text-align: center; }
+        .ip-display {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            background-color: #fff8e1;
+            padding: 15px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            direction: ltr;
+        }
+        .loader {
+            font-size: 18px;
+            color: #888;
+        }
+        .info-table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto 0;
+            border-collapse: collapse;
+        }
+        .info-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .info-table tr:nth-child(odd) { background-color: #fafafa; }
+        .info-table td:first-child { font-weight: bold; color: var(--primary-color); }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 20px;
+            border-top: 4px solid var(--secondary-color);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="wrapper">
+            <a href="https://aboelfadl-tools.netlify.app/" class="header-text-logo">AboElfadl tools</a>
+            <h1><a href="https://aboelfadl-tools.netlify.app/ip" title="ما هو عنوان IP الخاص بي؟">ما هو عنوان IP الخاص بي؟</a></h1>
+        </div>
+    </header>
+
+    <div class="site-wrapper">
+        <div class="wrapper">
+            <main>
+                <div class="box text-center">
+                    <h2>عنوان IP الخاص بك هو</h2>
+                    <div id="ip-container" class="loader">جاري التحميل...</div>
+
+                    <div id="info-container" style="display: none;">
+                        <h2>معلومات إضافية</h2>
+                        <table class="info-table">
+                            <tbody>
+                                <tr><td>الدولة</td><td id="country"></td></tr>
+                                <tr><td>المدينة</td><td id="city"></td></tr>
+                                <tr><td>المنطقة الزمنية</td><td id="timezone"></td></tr>
+                                <tr><td>مزود خدمة الإنترنت (ISP )</td><td id="isp"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h2 class="text-center">عن عنوان IP</h2>
+                    <p>عنوان بروتوكول الإنترنت (IP) هو معرف رقمي فريد يُخصص لكل جهاز يتصل بشبكة الإنترنت. هذا العنوان ضروري لتوجيه حركة المرور على الإنترنت وضمان وصول البيانات إلى وجهتها الصحيحة. تعرض هذه الأداة عنوان IP العام الذي يراه العالم الخارجي عند اتصالك بالإنترنت.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="wrapper">
+            &copy; 2025 | AboElfadl tools
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ipContainer = document.getElementById('ip-container');
+            const infoContainer = document.getElementById('info-container');
+
+            // Fetch IP data from ip-api.com
+            fetch('http://ip-api.com/json/?fields=status,message,country,city,timezone,isp,query' )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Display IP address
+                        ipContainer.classList.remove('loader');
+                        ipContainer.classList.add('ip-display');
+                        ipContainer.textContent = data.query;
+
+                        // Populate and display additional info
+                        document.getElementById('country').textContent = data.country || 'غير متوفر';
+                        document.getElementById('city').textContent = data.city || 'غير متوفر';
+                        document.getElementById('timezone').textContent = data.timezone || 'غير متوفر';
+                        document.getElementById('isp').textContent = data.isp || 'غير متوفر';
+                        infoContainer.style.display = 'block';
+                    } else {
+                        ipContainer.textContent = 'فشل في تحديد عنوان IP';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching IP data:', error);
+                    ipContainer.textContent = 'حدث خطأ أثناء جلب البيانات';
+                });
+        });
+    </script>
+
+</body>
+</html>

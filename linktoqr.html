@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تحويل الرابط إلى QR Code | AboElfadl tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="أداة مجانية لتحويل أي رابط إلى صورة باركود (QR Code) بصيغة PNG يمكنك تحميلها ومسحها ضوئيًا.">
+    <meta name="theme-color" content="#000000">
+    <base target="_top">
+
+    <style>
+        :root {
+            --primary-color: #000000; /* أسود */
+            --secondary-color: #ffba00; /* ذهبي */
+            --text-light: #ffffff;
+            --text-dark: #333;
+            --background-light: #f4f4f4;
+            --background-white: #fff;
+            --border-color: #ddd;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            font-weight: 700;
+            line-height: 1.9;
+        }
+        .wrapper { margin: auto; max-width: 1080px; padding: 0 15px; }
+        a { color: var(--secondary-color); text-decoration: none; transition: color 0.3s; }
+        a:hover { color: #e6a800; }
+        h1, h2 { margin: 0; }
+
+        header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 8px 0;
+            border-bottom: 5px solid var(--secondary-color);
+            height: 54px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+        }
+        header .wrapper { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        header h1 a { color: var(--text-light); }
+        .header-text-logo {
+            background: var(--secondary-color);
+            padding: 8px 12px;
+            color: var(--primary-color);
+            font-size: 16px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-top: -8px;
+            margin-bottom: -8px;
+            font-weight: bold;
+        }
+
+        .site-wrapper { padding-top: 70px; }
+        .box {
+            background: var(--background-white);
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+            border-radius: 5px;
+        }
+        .text-center { text-align: center; }
+        
+        .qr-form input[type="url"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            direction: ltr;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .qr-form input[type="url"]:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+            padding: 10px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        #qr-result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px dashed var(--border-color);
+            border-radius: 5px;
+            display: none;
+        }
+        #qr-result img {
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 15px;
+            border: 5px solid var(--background-white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 20px;
+            border-top: 4px solid var(--secondary-color);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="wrapper">
+            <a href="https://aboelfadl-tools.netlify.app/" class="header-text-logo">AboElfadl tools</a>
+            <h1><a href="https://aboelfadl-tools.netlify.app/linktoqr" title="تحويل الرابط إلى QR Code">تحويل الرابط إلى QR Code</a></h1>
+        </div>
+    </header>
+
+    <div class="site-wrapper">
+        <div class="wrapper">
+            <main>
+                <div class="box text-center">
+                    <h2>تحويل الرابط إلى باركود (QR Code )</h2>
+                    <p>أدخل الرابط في الحقل أدناه ثم اضغط على زر "تحويل" لإنشاء صورة الباركود.</p>
+                    
+                    <form id="qrForm" class="qr-form">
+                        <input type="url" id="urlInput" placeholder="https://example.com" required>
+                          
+
+                        <button type="submit" class="btn">تحويل</button>
+                    </form>
+
+                    <div id="qr-result">
+                        <h3>صورة الباركود جاهزة</h3>
+                        <img id="qrImage" src="" alt="QR Code">
+                          
+
+                        <a id="downloadBtn" href="#" class="btn">تحميل بصيغة PNG</a>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h2 class="text-center">كيف تعمل الأداة؟</h2>
+                    <p>تتيح لك هذه الخدمة تحويل أي رابط إلكتروني إلى صورة باركود من نوع QR Code. بمجرد مسح الصورة بكاميرا الهاتف، سيتم فتح الرابط مباشرة في المتصفح، مما يوفر وصولاً سريعًا وسهلاً إلى مواقع الويب.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="wrapper">
+            &copy; 2025 | AboElfadl tools
+        </div>
+    </footer>
+
+    <script>
+        const qrForm = document.getElementById('qrForm' );
+        const urlInput = document.getElementById('urlInput');
+        const qrResultDiv = document.getElementById('qr-result');
+        const qrImage = document.getElementById('qrImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        qrForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const url = urlInput.value.trim();
+            if (url === '') {
+                alert('الرجاء إدخال رابط صحيح.');
+                return;
+            }
+
+            const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&format=png&data=${encodeURIComponent(url )}`;
+            
+            qrImage.src = apiUrl;
+            qrResultDiv.style.display = 'block';
+        });
+
+        downloadBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            // Fetch the image as a blob
+            fetch(qrImage.src)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a temporary URL for the blob
+                    const blobUrl = URL.createObjectURL(blob);
+                    
+                    // Create a temporary anchor element to trigger the download
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = 'qr-code.png'; // Set the desired file name
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    // Clean up by removing the temporary element and revoking the blob URL
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(blobUrl);
+                })
+                .catch(error => console.error('فشل تحميل الصورة:', error));
+        });
+    </script>
+
+</body>
+</html>

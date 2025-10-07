@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>قياس سرعة النت | AboElfadl tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="اختبار سرعة الإنترنت لديك (سرعة التنزيل، الرفع، البينج، والجيتير) باستخدام أداة دقيقة وموثوقة.">
+    <meta name="theme-color" content="#000000">
+    <base target="_top">
+
+    <style>
+        :root {
+            --primary-color: #000000; /* أسود */
+            --secondary-color: #ffba00; /* ذهبي */
+            --text-light: #ffffff;
+            --text-dark: #333;
+            --background-light: #f4f4f4;
+            --background-white: #fff;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            font-weight: 700;
+            line-height: 1.9;
+        }
+        .wrapper { margin: auto; max-width: 1080px; padding: 0 15px; }
+        a { color: var(--secondary-color); text-decoration: none; transition: color 0.3s; }
+        a:hover { color: #e6a800; }
+        h1, h2 { margin: 0; }
+
+        header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 8px 0;
+            border-bottom: 5px solid var(--secondary-color);
+            height: 54px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+        }
+        header .wrapper { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        header h1 a { color: var(--text-light); }
+        .header-text-logo {
+            background: var(--secondary-color);
+            padding: 8px 12px;
+            color: var(--primary-color);
+            font-size: 16px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-top: -8px;
+            margin-bottom: -8px;
+            font-weight: bold;
+        }
+
+        .site-wrapper { padding-top: 70px; }
+        .box {
+            background: var(--background-white);
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+            border-radius: 5px;
+        }
+        .text-center { text-align: center; }
+        
+        /* Speed Test Iframe */
+        .speedtest-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 60%; /* Adjust this ratio based on the iframe content aspect ratio */
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .speedtest-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 20px;
+            border-top: 4px solid var(--secondary-color);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="wrapper">
+            <a href="https://aboelfadl-tools.netlify.app/" class="header-text-logo">AboElfadl tools</a>
+            <h1><a href="https://aboelfadl-tools.netlify.app/speed_test" title="قياس سرعة النت">قياس سرعة النت</a></h1>
+        </div>
+    </header>
+
+    <div class="site-wrapper">
+        <div class="wrapper">
+            <main>
+                <div class="box text-center">
+                    <h2>اختبار سرعة الإنترنت</h2>
+                    <p>انتظر لحظات حتى يبدأ الاختبار تلقائيًا. ستقيس الأداة سرعة التنزيل، الرفع، البينج، والجيتير.</p>
+                    <div class="speedtest-container">
+                        <iframe src="https://speed.cloudflare.com/ " frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h2 class="text-center">شرح نتائج الاختبار</h2>
+                    <p><strong>سرعة التنزيل (Download ):</strong> هي سرعة استقبال البيانات من الإنترنت إلى جهازك. كلما ارتفع الرقم، كان تصفحك وتحميلك للملفات أسرع.</p>
+                    <p><strong>سرعة الرفع (Upload):</strong> هي سرعة إرسال البيانات من جهازك إلى الإنترنت. سرعة رفع عالية مهمة لمكالمات الفيديو ورفع الملفات.</p>
+                    <p><strong>البينج (Ping):</strong> هو زمن الاستجابة بين جهازك والخادم. كلما انخفض الرقم، كان اتصالك أكثر استجابة، وهو أمر حيوي للألعاب عبر الإنترنت.</p>
+                    <p><strong>الجيتير (Jitter):</strong> هو مدى التذبذب في زمن الاستجابة (البينج). قيمة منخفضة تعني أن اتصالك أكثر استقرارًا.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="wrapper">
+            &copy; 2025 | AboElfadl tools
+        </div>
+    </footer>
+
+</body>
+</html>
