@@ -3,8 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تطبيق الروابط</title>
+  <title>تطبيق الروابط المتجاوب</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <style>
+    :root {
+      --primary-color: #8E2DE2;
+      --secondary-color: #4A00E0;
+      --text-color: #EAEAEA;
+      --background-color: #100F14;
+      --glass-bg: rgba(255, 255, 255, 0.05 );
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -12,71 +27,102 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #121212;
+      font-family: 'Cairo', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
       direction: rtl;
+      min-height: 100vh;
+      /* توسيط الحاوية للشاشات الكبيرة */
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 15px;
+    }
+    
+    .background-gradient {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), #00dbde, #fc00ff);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        z-index: -1;
     }
 
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* === التصميم الأساسي للأجهزة المحمولة (Mobile First) === */
     .app-container {
       width: 100%;
-      max-width: 414px;
-      height: 900px;
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      background-color: #000;
+      height: 100vh;
+      background: rgba(16, 15, 20, 0.85);
+      backdrop-filter: blur(5px);
       position: relative;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
-    /* العنوان العلوي */
+    .header-title, .search-bar, .actions-container {
+      flex-shrink: 0;
+    }
+
     .header-title {
-      padding: 20px;
+      padding: 12px;
       text-align: center;
       font-size: 18px;
-      font-weight: bold;
-      color: #FFD700;
-      background-color: #121212;
-      border-bottom: 1px solid #FFD700;
+      font-weight: 700;
+      color: var(--text-color);
     }
 
-    /* شريط البحث */
     .search-bar {
-      padding: 15px;
-      background-color: #121212;
-      border-bottom: 1px solid #FFD700;
+      padding: 12px 15px;
       display: flex;
       align-items: center;
       gap: 10px;
+      background: var(--glass-bg);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .search-input-wrapper {
+        position: relative;
+        flex: 1;
     }
 
     .search-input {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #FFD700;
-      border-radius: 20px;
+      width: 100%;
+      padding: 10px 45px 10px 20px;
+      border: 1px solid var(--glass-border);
+      border-radius: 25px;
       font-size: 16px;
+      font-family: 'Cairo', sans-serif;
       outline: none;
-      color: white;
-      background-color: #1e1e1e;
+      color: var(--text-color);
+      background-color: var(--glass-bg);
+    }
+    
+    .search-input-wrapper i {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        transform: translateY(-50%);
+        color: rgba(255,255,255,0.4);
     }
 
-    .search-input::placeholder {
-      color: #aaa;
-    }
+    .search-input::placeholder { color: rgba(255,255,255,0.4); }
+    .search-input:focus { border-color: var(--primary-color); }
 
-    /* حاوية الـ iframe */
     .iframe-container {
-      flex: 1;
-      overflow: hidden;
+      flex-grow: 1;
       position: relative;
       background-color: #ffffff;
+      overflow: auto;
     }
 
     iframe {
@@ -85,194 +131,148 @@
       border: none;
     }
 
-    /* زر رئيسي (فتح في صفحة جديدة) */
-    .main-btn {
-      padding: 15px;
-      background-color: #FFD700;
-      color: #000;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin: 15px;
-      transition: all 0.3s;
-      text-align: center;
+    .actions-container {
+        padding: 12px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        border-top: 1px solid var(--glass-border);
     }
-
-    .main-btn:hover {
-      background-color: #FFC107;
-      transform: scale(1.03);
-    }
-
-    /* حاوية الأزرار في الأسفل */
-    .buttons-container {
-      display: flex;
-      gap: 10px;
-      padding: 0 15px 20px;
-      justify-content: center;
-    }
-
-    .bottom-btn {
-      flex: 1;
+    
+    .btn {
       padding: 12px;
-      background-color: #FFD700;
-      color: #000;
       border: none;
       border-radius: 10px;
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Cairo', sans-serif;
       cursor: pointer;
-      transition: all 0.3s;
-      text-align: center;
-    }
-
-    .bottom-btn:hover {
-      background-color: #FFC107;
-      transform: scale(1.03);
-    }
-
-    /* نافذة السجل */
-    .log-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      display: none;
+      transition: all 0.3s ease;
+      display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 1000;
-      flex-direction: column;
-      padding: 20px;
+      gap: 8px;
     }
-
-    .log-content {
-      width: 100%;
-      max-width: 400px;
-      max-height: 80vh;
-      background-color: #1e1e1e;
-      border-radius: 15px;
-      overflow-y: auto;
-      padding: 15px;
+    
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
       color: white;
     }
 
-    .log-header {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      color: #FFD700;
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #FFD700;
-    }
-
-    .log-item {
+    .buttons-container {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      margin-bottom: 8px;
-      background-color: #333;
-      border-radius: 8px;
-      font-size: 14px;
-      word-break: break-all;
+      gap: 10px;
+      justify-content: center;
     }
 
-    .copy-btn {
-      background-color: #FFD700;
-      color: #000;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
+    .btn-secondary {
+      flex: 1;
+      background-color: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-color);
+    }
+    
+    /* === (Media Query) تعديلات للشاشات الكبيرة (لابتوب وكمبيوتر) === */
+    @media (min-width: 768px) {
+      body {
+        padding: 20px; /* إضافة حشو حول الحاوية */
+      }
+      .app-container {
+        width: 1350px;   /* العرض الأقصى المطلوب */
+        height: 800px;  /* الارتفاع الأقصى المطلوب */
+        max-width: 95vw; /* التأكد من عدم تجاوز عرض الشاشة */
+        max-height: 95vh;/* التأكد من عدم تجاوز ارتفاع الشاشة */
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+      }
     }
 
-    .close-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #FFD700;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+    /* أنماط النوافذ المنبثقة (تبقى كما هي لكل الشاشات) */
+    .log-modal { position: fixed; top: 0; right: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; padding: 20px; }
+    .log-content { width: 100%; max-width: 400px; max-height: 80vh; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; overflow-y: auto; padding: 20px; color: white; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+    .log-header { text-align: center; font-size: 18px; font-weight: bold; color: var(--text-color); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--glass-border); }
+    .log-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; margin-bottom: 8px; background-color: rgba(0,0,0,0.2); border-radius: 8px; font-size: 14px; word-break: break-all; }
+    .copy-btn { background-color: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+    .copy-btn:hover { background-color: var(--primary-color); color: white; }
+    .close-btn { margin-top: 20px; }
   </style>
 </head>
 <body>
+  <div class="background-gradient"></div>
+
   <div class="app-container">
-    <!-- العنوان العلوي -->
-    <div class="header-title">AboElfadl Ifram</div>
+    <div class="header-title">AboElfadl Frame</div>
 
-    <!-- شريط البحث -->
     <div class="search-bar">
-      <input type="text" class="search-input" placeholder="Link" value="https://example.com">
+      <div class="search-input-wrapper">
+        <input type="text" class="search-input" placeholder="أدخل الرابط هنا..." value="https://example.com">
+        <i class="fa-solid fa-link"></i>
+      </div>
     </div>
 
-    <!-- حاوية الـ iframe -->
     <div class="iframe-container">
-      <iframe id="myIframe" src="https://example.com" title="محتوى الرابط" onload="onIframeLoad()"></iframe>
+      <iframe id="myIframe" src="https://example.com" title="محتوى الرابط" onload="onIframeLoad( )"></iframe>
     </div>
 
-    <!-- زر فتح في صفحة جديدة -->
-    <button class="main-btn" onclick="openInNewPage()">افتح في صفحة جديدة</button>
-
-    <!-- زري السجل -->
-    <div class="buttons-container">
-      <button class="bottom-btn" onclick="showIframeLog()">سجل iFrame</button>
-      <button class="bottom-btn" onclick="showOpenLinkLog()">سجل Open Link</button>
+    <div class="actions-container">
+        <button class="btn btn-primary" onclick="openInNewPage()">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            فتح في صفحة جديدة
+        </button>
+        <div class="buttons-container">
+            <button class="btn btn-secondary" onclick="showIframeLog()">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                سجل iFrame
+            </button>
+            <button class="btn btn-secondary" onclick="showOpenLinkLog()">
+                <i class="fa-solid fa-book"></i>
+                سجل الروابط
+            </button>
+        </div>
     </div>
-
-    <!-- شريط سفلي -->
-    <div class="bottom-bar"></div>
   </div>
 
-  <!-- نافذة سجل iFrame -->
+  <!-- Modals -->
   <div id="iframeLogModal" class="log-modal">
     <div class="log-content">
       <div class="log-header">سجل روابط iFrame</div>
       <div id="iframeLogList"></div>
-      <button class="close-btn" onclick="closeIframeLog()">إغلاق</button>
+      <button class="btn btn-primary close-btn" onclick="closeIframeLog()">إغلاق</button>
     </div>
   </div>
-
-  <!-- نافذة سجل Open Link -->
   <div id="logModal" class="log-modal">
     <div class="log-content">
       <div class="log-header">سجل الروابط المفتوحة</div>
       <div id="logList"></div>
-      <button class="close-btn" onclick="closeLog()">إغلاق</button>
+      <button class="btn btn-primary close-btn" onclick="closeLog()">إغلاق</button>
     </div>
   </div>
 
   <script>
+    // JavaScript code remains unchanged
     const iframe = document.getElementById('myIframe');
     const input = document.querySelector('.search-input');
 
-    // تحميل الرابط في iframe
     function loadIframe() {
       let url = input.value.trim();
       if (url) {
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        if (!url.startsWith('http://' ) && !url.startsWith('https://' )) {
           url = 'https://' + url;
         }
         iframe.src = url;
       }
     }
 
-    // استدعاء عند الضغط على Enter أو ترك المربع
     input.addEventListener('keypress', e => {
-      if (e.key === 'Enter') loadIframe();
+      if (e.key === 'Enter' ) {
+        e.preventDefault();
+        loadIframe();
+      }
     });
 
     input.addEventListener('blur', loadIframe);
 
-    // عند تحميل iframe بنجاح → احفظ الرابط في سجل iFrame
     function onIframeLoad() {
       const currentUrl = iframe.src;
       if (currentUrl && currentUrl !== 'about:blank') {
@@ -280,24 +280,21 @@
       }
     }
 
-    // حفظ الرابط في سجل iFrame (فقط إذا لم يكن موجودًا)
     function saveToIframeLog(url) {
       let log = JSON.parse(localStorage.getItem('iframeLog')) || [];
       if (!log.includes(url)) {
-        log.push(url);
+        log.unshift(url);
         localStorage.setItem('iframeLog', JSON.stringify(log));
       }
     }
 
-    // فتح في صفحة جديدة + حفظ في سجل Open Link
     function openInNewPage() {
       const currentUrl = iframe.src;
       if (currentUrl && currentUrl !== 'about:blank') {
         window.open(currentUrl, '_blank');
-
         let openLinks = JSON.parse(localStorage.getItem('openLinks')) || [];
         if (!openLinks.includes(currentUrl)) {
-          openLinks.push(currentUrl);
+          openLinks.unshift(currentUrl);
           localStorage.setItem('openLinks', JSON.stringify(openLinks));
         }
       } else {
@@ -305,91 +302,64 @@
       }
     }
 
-    // عرض سجل iFrame
     function showIframeLog() {
-      const modal = document.getElementById('iframeLogModal');
-      const logList = document.getElementById('iframeLogList');
-      const log = JSON.parse(localStorage.getItem('iframeLog')) || [];
-
-      logList.innerHTML = '';
-
-      if (log.length === 0) {
-        logList.innerHTML = '<p style="text-align:center;color:#aaa;">لا توجد روابط تم تحميلها بعد</p>';
-      } else {
-        log.forEach(url => {
-          const item = document.createElement('div');
-          item.className = 'log-item';
-
-          try {
-            const domain = new URL(url).hostname;
-            const linkText = document.createElement('span');
-            linkText.textContent = domain;
-
-            const copyBtn = document.createElement('button');
-            copyBtn.className = 'copy-btn';
-            copyBtn.textContent = 'نسخ';
-            copyBtn.onclick = () => copyToClipboard(url);
-
-            item.appendChild(linkText);
-            item.appendChild(copyBtn);
-            logList.appendChild(item);
-          } catch (e) {
-            console.warn('رابط غير صالح:', url);
-          }
-        });
-      }
-
-      modal.style.display = 'flex';
+      displayLog('iframeLogModal', 'iframeLogList', 'iframeLog', 'لا توجد روابط تم تحميلها بعد');
     }
 
-    // عرض سجل Open Link
     function showOpenLinkLog() {
-      const modal = document.getElementById('logModal');
-      const logList = document.getElementById('logList');
-      const log = JSON.parse(localStorage.getItem('openLinks')) || [];
+      displayLog('logModal', 'logList', 'openLinks', 'لم تُفتح أي روابط في نافذة جديدة');
+    }
+    
+    function displayLog(modalId, listId, storageKey, emptyMessage) {
+        const modal = document.getElementById(modalId);
+        const logList = document.getElementById(listId);
+        const log = JSON.parse(localStorage.getItem(storageKey)) || [];
 
-      logList.innerHTML = '';
+        logList.innerHTML = '';
 
-      if (log.length === 0) {
-        logList.innerHTML = '<p style="text-align:center;color:#aaa;">لم تُفتح أي روابط في نافذة جديدة</p>';
-      } else {
-        log.forEach(url => {
-          const item = document.createElement('div');
-          item.className = 'log-item';
+        if (log.length === 0) {
+            logList.innerHTML = `<p style="text-align:center;color:var(--text-color);opacity:0.6;">${emptyMessage}</p>`;
+        } else {
+            log.forEach(url => {
+                const item = document.createElement('div');
+                item.className = 'log-item';
+                try {
+                    const domain = new URL(url).hostname;
+                    const linkText = document.createElement('span');
+                    linkText.textContent = domain;
 
-          try {
-            const domain = new URL(url).hostname;
-            const linkText = document.createElement('span');
-            linkText.textContent = domain;
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'copy-btn';
+                    copyBtn.textContent = 'نسخ';
+                    copyBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        copyToClipboard(url, copyBtn);
+                    };
 
-            const copyBtn = document.createElement('button');
-            copyBtn.className = 'copy-btn';
-            copyBtn.textContent = 'نسخ';
-            copyBtn.onclick = () => copyToClipboard(url);
-
-            item.appendChild(linkText);
-            item.appendChild(copyBtn);
-            logList.appendChild(item);
-          } catch (e) {
-            console.warn('رابط غير صالح:', url);
-          }
-        });
-      }
-
-      modal.style.display = 'flex';
+                    item.appendChild(linkText);
+                    item.appendChild(copyBtn);
+                    logList.appendChild(item);
+                } catch (e) {
+                    console.warn('رابط غير صالح في السجل:', url);
+                }
+            });
+        }
+        modal.style.display = 'flex';
     }
 
-    // نسخ الرابط
-    function copyToClipboard(url) {
+    function copyToClipboard(url, button) {
       navigator.clipboard.writeText(url).then(() => {
-        alert('تم النسخ: ' + url);
+        const originalText = button.textContent;
+        button.textContent = 'تم النسخ!';
+        setTimeout(() => {
+            button.textContent = originalText;
+        }, 1500);
       }).catch(err => {
         console.error('فشل النسخ:', err);
         alert('فشل النسخ، حاول مرة أخرى');
       });
     }
 
-    // إغلاق النافذتين
     function closeIframeLog() {
       document.getElementById('iframeLogModal').style.display = 'none';
     }
@@ -398,7 +368,6 @@
       document.getElementById('logModal').style.display = 'none';
     }
 
-    // إغلاق النافذة بالنقر خارجها
     window.onclick = function(event) {
       const modal1 = document.getElementById('iframeLogModal');
       const modal2 = document.getElementById('logModal');
