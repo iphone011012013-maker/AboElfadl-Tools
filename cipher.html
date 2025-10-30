@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شفرة Base64 (تدعم العربية)</title>
+    <style>
+        /* استيراد خط (اختياري لكنه يحسن المظهر) */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        :root {
+            /* ألوان التصميم المستوحاة من uiverse.io (Neumorphism/Dark Mode) */
+            --background-color: #2e2e2e;
+            --container-color: #2e2e2e;
+            --text-color: #d1d1d1;
+            --highlight-color: #00aaff;
+            --shadow-light: rgba(255, 255, 255, 0.05);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            
+            /* ألوان الأزرار */
+            --encrypt-color: #007bff;
+            --decrypt-color: #28a745;
+            --copy-color: #6c757d;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* تصميم الحاوية الرئيسي (uiverse.io/adamgiebl/fuzzy-sloth-33) */
+        .container {
+            background-color: var(--container-color);
+            padding: 30px;
+            border-radius: 25px;
+            /* ظل Neumorphism */
+            box-shadow: 
+                8px 8px 16px var(--shadow-dark),
+                -8px -8px 16px var(--shadow-light);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--text-color);
+            margin-bottom: 25px;
+        }
+
+        /* تصميم حقول الإدخال */
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background-color: transparent;
+            color: var(--text-color);
+            font-size: 16px;
+            border-radius: 10px;
+            /* تصميم داخلي غائر (Inset Neumorphism) */
+            box-shadow: 
+                inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+            box-sizing: border-box; /* لضمان حساب الـ padding بشكل صحيح */
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: 
+                inset 2px 2px 4px var(--shadow-dark),
+                inset -2px -2px 4px var(--shadow-light),
+                0 0 0 2px var(--highlight-color); /* تحديد عند التركيز */
+        }
+
+        textarea.form-input {
+            height: 140px;
+            resize: vertical;
+        }
+        
+        /* تصميم الأزرار (uiverse.io/Yaya120/grumpy-lion-1 - بتعديل) */
+        .buttons {
+            display: flex;
+            gap: 15px; /* مسافة بين الأزرار */
+        }
+        
+        .btn {
+            flex: 1; /* لجعل الأزرار بنفس العرض */
+            padding: 15px 10px; /* تقليل الحشو الأفقي قليلاً */
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            color: var(--text-color);
+            background-color: var(--container-color);
+            /* الظل الخارجي */
+            box-shadow: 
+                5px 5px 10px var(--shadow-dark),
+                -5px -5px 10px var(--shadow-light);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn:hover {
+            box-shadow: 
+                3px 3px 6px var(--shadow-dark),
+                -3px -3px 6px var(--shadow-light);
+        }
+
+        .btn:active {
+            /* تأثير الضغط (غائر) */
+            box-shadow: 
+                inset 3px 3px 6px var(--shadow-dark),
+                inset -3px -3px 6px var(--shadow-light);
+        }
+        
+        /* ألوان الأزرار المخصصة */
+        #encryptBtn {
+            background-color: var(--encrypt-color);
+        }
+        #encryptBtn:hover {
+             color: #d1d1d1;
+             background-color: #0069d9;
+        }
+
+        #decryptBtn {
+            background-color: var(--decrypt-color);
+        }
+         #decryptBtn:hover {
+             color: #d1d1d1;
+             background-color: #218838;
+        }
+
+        #copyBtn {
+            background-color: var(--copy-color);
+            font-size: 20px; /* تكبير حجم الأيقونة */
+            padding-top: 10px; /* ضبط محاذاة الأيقونة */
+            padding-bottom: 10px;
+        }
+        #copyBtn:hover {
+             color: #d1d1d1;
+             background-color: #5a6268;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>شفرة Base64 (للعربية والإنجليزية)</h2>
+
+        <div class="form-group">
+            <textarea id="inputText" class="form-input" placeholder="أدخل النص الأصلي هنا..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <textarea id="outputText" class="form-input" placeholder="النتيجة المشفرة..." dir="ltr"></textarea>
+        </div>
+
+        <div class="buttons">
+            <button id="encryptBtn" class="btn">تشفير</button>
+            <button id="decryptBtn" class="btn">فك التشفير</button>
+            <button id="copyBtn" class="btn" aria-label="نسخ النتيجة">📋</button>
+        </div>
+    </div>
+
+    <script>
+        // تحديد العناصر
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        const encryptBtn = document.getElementById('encryptBtn');
+        const decryptBtn = document.getElementById('decryptBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        // ربط الأزرار
+        encryptBtn.addEventListener('click', encrypt);
+        decryptBtn.addEventListener('click', decrypt);
+        copyBtn.addEventListener('click', copyToClipboard);
+
+        /**
+         * دالة التشفير إلى Base64
+         */
+        function encrypt() {
+            try {
+                let text = inputText.value;
+                const encoder = new TextEncoder();
+                const data = encoder.encode(text);
+                const base64String = btoa(String.fromCharCode.apply(null, data));
+                outputText.value = base64String;
+            } catch (e) {
+                outputText.value = "خطأ في التشفير: " + e.message;
+            }
+        }
+
+        /**
+         * دالة فك التشفير من Base64
+         */
+        function decrypt() {
+            try {
+                // نأخذ النص المشفر من حقل النتيجة
+                let base64String = outputText.value;
+                const decodedString = atob(base64String);
+                const bytes = new Uint8Array(decodedString.length);
+                for (let i = 0; i < decodedString.length; i++) {
+                    bytes[i] = decodedString.charCodeAt(i);
+                }
+                const decoder = new TextDecoder('utf-8');
+                inputText.value = decoder.decode(bytes);
+                
+            } catch (e) {
+                // هذا يحدث غالباً إذا كان النص المدخل ليس Base64 صالحاً
+                inputText.value = "خطأ: النص المدخل غير صالح لفك التشفير.";
+            }
+        }
+
+        /**
+         * دالة نسخ النتيجة إلى الحافظة
+         */
+        function copyToClipboard() {
+            outputText.select();
+            outputText.setSelectionRange(0, 99999); // للتوافق مع الجوال
+
+            navigator.clipboard.writeText(outputText.value).then(() => {
+                // تم النسخ بنجاح
+                copyBtn.textContent = '✅'; // تغيير الأيقونة للتأكيد
+                setTimeout(() => {
+                    copyBtn.textContent = '📋'; // إرجاع الأيقونة الأصلية
+                }, 2000); 
+            }).catch(err => {
+                copyBtn.textContent = '❌'; // أيقونة خطأ
+                 setTimeout(() => {
+                    copyBtn.textContent = '📋';
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
+
