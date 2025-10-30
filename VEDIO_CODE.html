@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRANDO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Kaleido">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="brando.png" type="image/png">
+    <style>
+        /* --- إعدادات الصفحة العامة --- */
+        /* تفعيل التمرير السلس على مستوى الصفحة */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #1a1a1a; 
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        /* --- حاوية الصفحة الرئيسية --- */
+        .page-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- تصميم البطاقة العلوي --- */
+        .card {
+            position: relative;
+            width: 100%;
+            background: #282828;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 25px;
+            margin-bottom: 90px;
+        }
+
+        /* --- الجزء العلوي من البطاقة (الخلفية) --- */
+        .card-header {
+            position: relative;
+            height: 150px;
+            background-color: #000;
+            background-image: url('غلاف.png');
+            background-image-padding: 15px 20px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        /* --- حاوية الصورة الشخصية --- */
+        .profile-image-container {
+            position: absolute;
+            top: 150px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #282828;
+            padding: 5px;
+            z-index: 10;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #D4AF37; 
+        }
+
+        /* --- جسم البطاقة (المحتوى النصي) --- */
+        .card-body {
+            text-align: center;
+            padding: 80px 20px 15px 20px;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0;
+            color: #D4AF37;
+            letter-spacing: 1px;
+        }
+        
+        /* --- قسم العنوان --- */
+        .location-section {
+            background-color: #1f1f1f;
+            padding: 15px 20px;
+            margin: 15px 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .location-icon {
+            fill: #D4AF37;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .address {
+            font-size: 15px;
+            font-weight: 400;
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* --- الجزء السفلي من البطاقة (الأزرار) --- */
+        .card-footer {
+            padding: 0 25px;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .uiverse-btn {
+            --btn-color: #D4AF37;
+            position: relative;
+            padding: 1em 1.8em;
+            outline: none;
+            border: 1px solid #1c1c1c;
+            background: #212121;
+            color: var(--btn-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            overflow: hidden;
+            transition: 0.2s;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        .uiverse-btn:hover { box-shadow: 0 0 10px var(--btn-color), 0 0 25px var(--btn-color), 0 0 50px var(--btn-color); transition-delay: 0.5s; }
+        .uiverse-btn span { position: absolute; }
+        .uiverse-btn span:nth-child(1) { top: 0; left: -100%; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--btn-color)); }
+        .uiverse-btn:hover span:nth-child(1) { left: 100%; transition: 0.7s; }
+        .uiverse-btn span:nth-child(3) { bottom: 0; right: -100%; width: 100%; height: 2px; background: linear-gradient(90deg, var(--btn-color), transparent); }
+        .uiverse-btn:hover span:nth-child(3) { right: 100%; transition: 0.7s; transition-delay: 0.35s; }
+        .uiverse-btn span:nth-child(2) { top: -100%; right: 0; width: 2px; height: 100%; background: linear-gradient(180deg, transparent, var(--btn-color)); }
+        .uiverse-btn:hover span:nth-child(2) { top: 100%; transition: 0.7s; transition-delay: 0.17s; }
+        .uiverse-btn span:nth-child(4) { bottom: -100%; left: 0; width: 2px; height: 100%; background: linear-gradient(360deg, var(--btn-color), transparent); }
+        .uiverse-btn:hover span:nth-child(4) { bottom: 100%; transition: 0.7s; transition-delay: 0.52s; }
+        
+        /* --- تخصيص ألوان الأزرار --- */
+        .facebook-btn { --btn-color: #5890FF; }
+        .instagram-btn { --btn-color: #E1306C; }
+        .tiktok-btn { --btn-color: #00f2ea; }
+        .whats-btn { --btn-color: #128C7E; }
+        /* لون الزر الجديد */
+        .videos-btn { --btn-color: #D4AF37; } /* لون ذهبي مميز */
+
+        /* --- قسم الفيديوهات --- */
+        .videos-section {
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a3a3a;
+        }
+
+        .video-container {
+            margin-bottom: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background-color: #000;
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        
+        <div id="videos" class="videos-section">
+            <h3 class="section-title">أحدث الفيديوهات</h3>
+            
+            <div class="video-container">
+                <video controls controlslist="nodownload" oncontextmenu="return false;">
+                    <source src="CODE1.mp4" type="video/mp4">
+                    متصفحك لا يدعم عرض الفيديوهات.
+                </video>
+            </div>
+
+            <div class="video-container">
+                <video controls controlslist="nodownload" oncontextmenu="return false;">
+                    <source src="brando2.mp4" type="video/mp4">
+                    متصفحك لا يدعم عرض الفيديوهات.
+                </video>
+            </div>
+            
+            <div class="video-container">
+                <video controls controlslist="nodownload" oncontextmenu="return false;">
+                    <source src="brando1.mp4" type="video/mp4">
+                    متصفحك لا يدعم عرض الفيديوهات.
+                </video>
+            </div>
+
+            <div class="video-container">
+                <video controls controlslist="nodownload" oncontextmenu="return false;">
+                    <source src="brando2.mp4" type="video/mp4">
+                    متصفحك لا يدعم عرض الفيديوهات.
+                </video>
+            </div>
+
+            <div class="video-container">
+                <video controls controlslist="nodownload" oncontextmenu="return false;">
+                    <source src="brando3.mp4" type="video/mp4">
+                    متصفحك لا يدعم عرض الفيديوهات.
+                </Mvideo>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
