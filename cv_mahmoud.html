@@ -1,296 +1,875 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>CV - Mahmoud AboElfadl</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بطاقة عرض شخصية</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="mahmoud.png" type="image/png">
   <style>
-    body {
-      font-family: 'Cairo', sans-serif;
-      background-color: #f9f9f9;
+    :root {
+      --primary-color: #8E2DE2;
+      --secondary-color: #4A00E0;
+      --text-color: #EAEAEA;
+      --background-color: #100F14;
+      --card-bg: #2c2c2c;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-    }.popup-overlay, .info-popup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
+      box-sizing: border-box;
+    }
 
-.popup-content, .info-content {
-  background: #000;
-  border-radius: 15px;
-  padding: 25px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-  text-align: center;
-  animation: fadeIn 0.5s ease-in-out;
-  color: gold;
-}
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--background-color );
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: auto; /* السماح بالتمرير إذا زاد المحتوى */
+      padding: 20px;
+    }
+    
+    .background-gradient {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), #00dbde, #fc00ff);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        z-index: -1;
+    }
 
-.gold-frame {
-  display: inline-block;
-  padding: 5px;
-  background: linear-gradient(135deg, gold, #bfa100);
-  border-radius: 50%;
-  box-shadow: 0 0 15px gold;
-  margin-bottom: 15px;
-}
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
-.popup-content img, .info-content img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
+    .card {
+      position: relative;
+      width: 340px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
 
-h2, h3 {
-  font-size: 24px;
-  color: gold;
-  font-weight: bold;
-}
+    .card .glowing-border {
+      position: absolute;
+      z-index: -1;
+      inset: -3px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
 
-p, li {
-  font-size: 16px;
-  color: gold;
-}
+    .card .glowing-border::before {
+      content: '';
+      position: absolute;
+      aspect-ratio: 1/1;
+      top: 50%;
+      left: 50%;
+      min-width: 200%;
+      min-height: 200%;
+      background-image: conic-gradient(hsl(240, 100%, 60%), hsl(270, 100%, 50%), hsl(300, 100%, 50%), hsl(330, 100%, 50%), hsl(360, 100%, 50%), hsl(30, 100%, 50%), hsl(60, 100%, 50%), hsl(90, 100%, 50%), hsl(120, 100%, 50%), hsl(150, 100%, 50%), hsl(180, 100%, 50%), hsl(210, 100%, 50%), hsl(240, 100%, 60%));
+      animation: spin 4s linear infinite;
+      transform-origin: center center;
+      transform: translate(-50%, -50%);
+    }
 
- .interests {
-  text-align: right;
-  margin-top: 20px;
-}
- .interests li {
-  list-style: none;
-  margin: 8px 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
- .interests li i {
-  margin-left: 10px;
-  color: gold;
-  }
+    @keyframes spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
 
-ul {
-  list-style: none;
-  padding: 0;
-  text-align: center;
-}
+    .card-content {
+      position: relative;
+    }
 
-ul li {
-  margin-bottom: 12px;
-  }
+    .profile-image {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+    
+    .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-ul li button {
-  background-color: gold;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+    .card-title {
+      margin-bottom: 8px;
+      font-size: 1.5em;
+      font-weight: 700;
+    }
 
-ul li button:hover {
-  box-shadow: 0 0 10px gold;
-}
+    .card-subtitle {
+      font-size: 1em;
+      color: #ccc;
+      margin-bottom: 24px;
+    }
 
-.btn-gold {
-  background-color: gold;
-  color: #000;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  margin: 10px 5px 0;
-}
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .cyber-buttons-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap; /* للسماح بالالتفاف */
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+    }
 
-.back-link, .close-btn { /* تم إضافة .close-btn هنا */
-  display: inline-block;
-  margin-top: 20px;
-  background-color: gold;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  text-decoration: none;
-  cursor: pointer;
-}
+    .button {
+      position: relative;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      padding-block: 0.5rem;
+      padding-inline: 1.25rem;
+      background-color: #4A00E0;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffff;
+      gap: 10px;
+      font-weight: bold;
+      border: 3px solid #ffffff4d;
+      outline: none;
+      overflow: hidden;
+      font-size: 15px;
+      cursor: pointer;
+      width: 280px; /* توحيد عرض الأزرار */
+    }
 
-.back-link:hover, .close-btn:hover { /* وتم إضافة .close-btn هنا أيضًا */
-  box-shadow: 0 0 10px gold;
-  }
+    .button .icon {
+      width: 24px;
+      height: 24px;
+      transition: all 0.3s ease-in-out;
+    }
 
-.interest-list {
-  margin-top: 15px;
-  direction: rtl;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+    .button:hover {
+      transform: scale(1.05);
+      border-color: #fff9;
+    }
 
-.interest-item {
-  display: grid;
-  grid-template-columns: 24px auto;
-  align-items: center;
-  gap: 10px;
-}
+    .radio-wrapper {
+      position: relative;
+      height: 40px; 
+      width: 90px;  
+      cursor: pointer;
+    }
 
-.interest-item i {
-  font-size: 18px;
-  color: gold;
-  text-align: right;
-  }
+    .radio-wrapper .btn,
+    .radio-wrapper .btn::after {
+     padding: 0; 
+     font-size: 10px; 
+     background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
+     border: 0;
+     color: #fff;
+     letter-spacing: 3px;
+     line-height: 40px; 
+     box-shadow: 6px 0px 0px #00e6f6;
+     outline: transparent;
+     position: relative;
+     width: 100%;
+     height: 100%;
+     text-align: center;
+     font-weight: 900;
+     text-transform: uppercase;
+    }
 
-.services {
-  margin-top: 10px;
-  text-align: right;
-  direction: rtl;
-  font-size: 15px;
-}
+    .radio-wrapper .btn::after {
+     --slice-0: inset(50% 50% 50% 50%);
+     --slice-1: inset(80% -6px 0 0);
+     --slice-2: inset(50% -6px 30% 0);
+     --slice-3: inset(10% -6px 85% 0);
+     --slice-4: inset(40% -6px 43% 0);
+     --slice-5: inset(80% -6px 5% 0);
+     content: ""; 
+     display: block;
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #ff013c 5%);
+     text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #00e6f6;
+     clip-path: var(--slice-0);
+    }
 
-.services li {
-  margin: 5px 0;
-  }
+    .radio-wrapper .btn:hover::after {
+     animation: 1s glitch;
+     animation-timing-function: steps(2, end);
+    }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1);
-}
-}
-.contact-icons {
-  margin-bottom: 10px;
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-}
-.contact-icons a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  background-color: gold;
-  color: black;
-  border-radius: 50%;
-  text-decoration: none;
-  font-size: 24px;
-  transition: transform 0.3s;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-}
-.contact-icons a:hover {
-  transform: scale(1.2);
-}
-.index-link {
-  margin-top: 20px;
-  text-align: center;
-  }
+    @keyframes glitch {
+     0% {
+      clip-path: var(--slice-1);
+      transform: translate(-20px, -10px);
+     }
+     10% {
+      clip-path: var(--slice-3);
+      transform: translate(10px, 10px);
+     }
+     20% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 10px);
+     }
+     30% {
+      clip-path: var(--slice-3);
+      transform: translate(0px, 5px);
+     }
+     40% {
+      clip-path: var(--slice-2);
+      transform: translate(-5px, 0px);
+     }
+     50% {
+      clip-path: var(--slice-3);
+      transform: translate(5px, 0px);
+     }
+     60% {
+      clip-path: var(--slice-4);
+      transform: translate(5px, 10px);
+     }
+     70% {
+      clip-path: var(--slice-2);
+      transform: translate(-10px, 10px);
+     }
+     80% {
+      clip-path: var(--slice-5);
+      transform: translate(20px, -10px);
+     }
+     90% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 0px);
+     }
+     100% {
+      clip-path: var(--slice-1);
+      transform: translate(0);
+     }
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 380px;
+      text-align: center;
+      border: 2px solid var(--primary-color);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal-overlay.active .modal-content {
+        transform: scale(1);
+    }
+
+    .modal-content img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid var(--secondary-color);
+    }
+
+    .modal-content h3 {
+      font-size: 1.6em;
+      margin-bottom: 10px;
+      color: var(--text-color);
+    }
+
+    .modal-content p {
+      font-size: 1em;
+      color: #ccc;
+      margin-bottom: 25px;
+    }
+    
+    .modal-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .modal-buttons .button {
+        width: 100%;
+    }
+
+    .close-button {
+      background-color: #ff4d4d;
+      width: 100%;
+    }
+    .close-button:hover {
+        background-color: #ff1a1a;
+    }
+
+    /* === بداية كود CSS الخاص بخانة إدخال الرسالة === */
+    /* From Uiverse.io by Lakshay-art */
+    /* تم إجراء تعديلات طفيفة للتوافق */
+    
+    /* تم إزالة .grid لأنه يغطي الصفحة بالكامل */
+
+    .whatsapp-container {
+      margin-top: 16px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .input-container-white,
+    .input-container-border,
+    .input-container-darkBorderBg,
+    .input-container-glow {
+      max-height: 70px;
+      max-width: 314px; /* العرض الأقصى لخانة الإدخال */
+      height: 100%;
+      width: 100%; /* اجعل العرض 100% ليتناسب مع الحاوية */
+      position: absolute;
+      overflow: hidden;
+      z-index: -1;
+      /* Border Radius */
+      border-radius: 12px;
+      filter: blur(3px);
+    }
+    
+    .whatsapp-input {
+      background-color: #010201;
+      border: none;
+      /* padding:7px; */
+      width: 280px; /* تم تعديل العرض ليتناسب مع الأزرار */
+      height: 56px;
+      border-radius: 10px;
+      color: white;
+      padding-inline: 15px; /* تم تعديل الحشو */
+      font-size: 16px; /* تم تعديل حجم الخط */
+      font-family: 'Cairo', sans-serif; /* إضافة الخط */
+    }
+    
+    #poda {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 314px;
+      width: 100%;
+      position: relative; /* ضروري لعمل العناصر الداخلية */
+      height: 70px; /* تحديد ارتفاع للحاوية */
+    }
+    
+    .whatsapp-input::placeholder {
+      color: #c0b9c0;
+    }
+    
+    .whatsapp-input:focus {
+      outline: none;
+    }
+    
+    #main:focus-within > #input-mask {
+      display: none;
+    }
+    
+    /* تم إزالة input-mask و pink-mask للتبسيط */
+    
+    .input-container-white {
+      max-height: 63px;
+      max-width: 307px;
+      width: 286px; /* عرض يتناسب مع الحقل */
+      border-radius: 10px;
+      filter: blur(2px);
+    }
+    
+    .input-container-white::before {
+      content: "";
+      z-index: -2;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(83deg);
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      filter: brightness(1.4);
+      background-image: conic-gradient(
+        rgba(0, 0, 0, 0) 0%,
+        #a099d8,
+        rgba(0, 0, 0, 0) 8%,
+        rgba(0, 0, 0, 0) 50%,
+        #dfa2da,
+        rgba(0, 0, 0, 0) 58%
+      );
+      /* //  animation: rotate 4s linear infinite; */
+      transition: all 2s;
+    }
+    
+    .input-container-border {
+      max-height: 59px;
+      max-width: 303px;
+      width: 282px; /* عرض يتناسب مع الحقل */
+      border-radius: 11px;
+      filter: blur(0.5px);
+    }
+    
+    .input-container-border::before {
+      content: "";
+      z-index: -2;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(70deg);
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      filter: brightness(1.3);
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-image: conic-gradient(
+        #1c191c,
+        #402fb5 5%,
+        #1c191c 14%,
+        #1c191c 50%,
+        #cf30aa 60%,
+        #1c191c 64%
+      );
+      /* // animation: rotate 4s 0.1s linear infinite; */
+      transition: all 2s;
+    }
+    
+    .input-container-darkBorderBg {
+      max-height: 65px;
+      max-width: 312px;
+      width: 288px; /* عرض يتناسب مع الحقل */
+    }
+    
+    .input-container-darkBorderBg::before {
+      content: "";
+      z-index: -2;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(82deg);
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-image: conic-gradient(
+        rgba(0, 0, 0, 0),
+        #18116a,
+        rgba(0, 0, 0, 0) 10%,
+        rgba(0, 0, 0, 0) 50%,
+        #6e1b60,
+        rgba(0, 0, 0, 0) 60%
+      );
+      transition: all 2s;
+    }
+    
+    #poda:hover > .input-container-darkBorderBg::before {
+      transform: translate(-50%, -50%) rotate(262deg);
+    }
+    
+    #poda:hover > .input-container-glow::before {
+      transform: translate(-50%, -50%) rotate(240deg);
+    }
+    
+    #poda:hover > .input-container-white::before {
+      transform: translate(-50%, -50%) rotate(263deg);
+    }
+    
+    #poda:hover > .input-container-border::before {
+      transform: translate(-50%, -50%) rotate(250deg);
+    }
+    
+    #poda:hover > .input-container-darkBorderBg::before {
+      transform: translate(-50%, -50%) rotate(-98deg);
+    }
+    
+    #poda:hover > .input-container-glow::before {
+      transform: translate(-50%, -50%) rotate(-120deg);
+    }
+    
+    #poda:hover > .input-container-white::before {
+      transform: translate(-50%, -50%) rotate(-97deg);
+    }
+    
+    #poda:hover > .input-container-border::before {
+      transform: translate(-50%, -50%) rotate(-110deg);
+    }
+    
+    #poda:focus-within > .input-container-darkBorderBg::before {
+      transform: translate(-50%, -50%) rotate(442deg);
+      transition: all 4s;
+    }
+    
+    #poda:focus-within > .input-container-glow::before {
+      transform: translate(-50%, -50%) rotate(420deg);
+      transition: all 4s;
+    }
+    
+    #poda:focus-within > .input-container-white::before {
+      transform: translate(-50%, -50%) rotate(443deg);
+      transition: all 4s;
+    }
+    
+    #poda:focus-within > .input-container-border::before {
+      transform: translate(-50%, -50%) rotate(430deg);
+      transition: all 4s;
+    }
+    
+    .input-container-glow {
+      overflow: hidden;
+      filter: blur(30px);
+      opacity: 0.4;
+      max-height: 130px;
+      max-width: 354px;
+      width: 300px; /* عرض يتناسب مع الحقل */
+    }
+    
+    .input-container-glow:before {
+      content: "";
+      z-index: -2;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(60deg);
+      position: absolute;
+      width: 999px;
+      height: 999px;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      /*border color, change middle color*/
+      background-image: conic-gradient(
+        #000,
+        #402fb5 5%,
+        #000 38%,
+        #000 50%,
+        #cf30aa 60%,
+        #000 87%
+      );
+      /* change speed here */
+      /* //animation: rotate 4s 0.3s linear infinite; */
+      transition: all 2s;
+    }
+    
+    @keyframes rotate {
+      100% {
+        transform: translate(-50%, -50%) rotate(450deg);
+      }
+    }
+    
+    /* تم إزالة الأجزاء غير المستخدمة مثل filter-icon و search-icon */
+    
+    #main {
+      position: relative;
+    }
+    /* === نهاية كود CSS الخاص بخانة إدخال الرسالة === */
+
+    /* === تنسيق زر الواتساب === */
+    .whatsapp-button {
+      background-color: #25D366; /* لون واتساب */
+      border-color: #ffffff4d;
+      width: 280px; /* نفس عرض الأزرار الأخرى */
+    }
+
+    .whatsapp-button:hover {
+      background-color: #128C7E;
+      border-color: #fff9;
+    }
 
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body><div class="popup-overlay" id="mainPopup">
-  <div class="popup-content">
-    <div class="gold-frame">
-      <img src="icons/mahmoud.png" alt="Mahmoud AboElfadl">
-    </div>
-    <h2>Mahmoud AboElfadl</h2>
-    <p>طالب بكلية الآداب - جامعة حلوان، قسم التاريخ</p>
-    <div class="contact-icons">
-        <a href="tel:01093650351" title="اتصال"><i class="fas fa-phone"></i></a>
-        <a href="https://wa.me/201093650351" title="واتساب" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:apoalfadl4@gmail.com" title="بريد إلكتروني"><i class="fas fa-envelope"></i></a>
-    </div>
-    <p>مؤسس ومدير:</p>
-    <ul>
-      <li><button onclick="openInfo('media')">AboElfadl Media</button></li>
-      <li><button onclick="openInfo('store')">AboElfadl Store</button></li>
-      <li><button onclick="openInfo('clothing')">ملابس أبو الفضل</button></li>
-    </ul>
-    <h3>اهتماماتي ومهاراتي:</h3>
-    <div class="interest-list">
-      <div class="interest-item"><i class="fas fa-code"></i><span>مهتم جدًا بمجال تصميم وتطوير المواقع الإلكترونية.</span></div>
-      <div class="interest-item"><i class="fas fa-laptop"></i><span>إنشاء صفحات هبوط احترافية باستخدام أدوات مثل Canva وBlogspot وLinktree.</span></div>
-      <div class="interest-item"><i class="fas fa-bullhorn"></i><span>كتابة المحتوى التسويقي وإدارة الحملات الإعلانية.</span></div>
-      <div class="interest-item"><i class="fas fa-lightbulb"></i><span>بناء الهوية الرقمية للعلامات التجارية.</span></div>
-      <div class="interest-item"><i class="fas fa-graduation-cap"></i><span>تطوير مهاراتي في برمجة الواجهات والتصميم الإبداعي.</span></div>
-    </div>
-    <a href="index.html" class="back-link">رجوع إلى الصفحة الرئيسية</a>
-  </div>
-</div><div class="info-popup" id="mediaPopup" style="display: none;">
-  <div class="info-content">
-    <div class="gold-frame">
-      <img src="icons/aboelfadl_media.png" alt="AboElfadl Media">
-    </div>
-    <h2>AboElfadl Media</h2>
-    <p>وكالة متخصصة في التسويق الرقمي، تصميم الجرافيك، إدارة الحملات الإعلانية.</p>
-    <p>سنة التأسيس: 2022</p>
-    <ul class="services">
-      <li>تصميم منشورات إعلانية احترافية</li>
-      <li>إنشاء فيديوهات دعائية</li>
-      <li>تخطيط وإدارة الحملات التسويقية</li>
-      <li>إنشاء صفحات هبوط</li>
-      <li>كتابة المحتوى التسويقي</li>
-    </ul>
-    <a class="btn-gold" href="https://www.facebook.com/AboElfadl.Media" target="_blank">فيسبوك</a>
-    <a class="btn-gold" href="https://aboelfadl-media.my.canva.site" target="_blank">الموقع الرسمي</a>
-    <button class="close-btn" onclick="closeInfo()">إغلاق</button>
-  </div>
-</div><div class="info-popup" id="storePopup" style="display: none;">
-  <div class="info-content">
-    <div class="gold-frame">
-      <img src="icons/aboelfadl_store.png" alt="AboElfadl Store">
-    </div>
-    <h2>AboElfadl Store</h2>
-    <p>متجر إلكتروني متخصص في تكنولوجيا وإكسسوارات الهواتف.</p>
-    <p>سنة التأسيس: 2023</p>
-    <ul class="services">
-      <li>بيع إكسسوارات الهواتف الحديثة</li>
-      <li>عرض أحدث المنتجات التكنولوجية</li>
-      <li>خدمة عملاء احترافية</li>
-    </ul>
-    <a class="btn-gold" href="https://www.facebook.com/AboElfadl.Store" target="_blank">فيسبوك</a>
-    <a class="btn-gold" href="https://cezma.com/store/aboelfadl.store" target="_blank">المتجر</a>
-    <button class="close-btn" onclick="closeInfo()">إغلاق</button>
-  </div>
-</div><div class="info-popup" id="clothingPopup" style="display: none;">
-  <div class="info-content">
-    <div class="gold-frame">
-      <img src="icons/aboelfadl_clothing.png" alt="ملابس أبو الفضل">
-    </div>
-    <h2>ملابس أبو الفضل</h2>
-    <p>براند ملابس رجالية عصري، بتصميمات فريدة وجودة عالية.</p>
-    <p>سنة التأسيس: 2024</p>
-    <ul class="services">
-      <li>تصميمات ملابس رجالي فريدة</li>
-      <li>جودة عالية في الخامات والتفصيل</li>
-      <li>توصيل سريع وخدمة ممتازة</li>
-    </ul>
-    <a class="btn-gold" href="https://www.facebook.com/AboElfadl.Clothing" target="_blank">فيسبوك</a>
-    <a class="btn-gold" href="https://cezma.com/store/aboelfadl.clothing" target="_blank">المتجر</a>
-    <button class="close-btn" onclick="closeInfo()">إغلاق</button> </div>
-</div><script>
-  function openInfo(project) {
-    document.getElementById('mainPopup').style.display = 'none';
-    document.getElementById(project + 'Popup').style.display = 'flex';
-  }
+<body>
 
-  function closeInfo() {
-    document.getElementById('mainPopup').style.display = 'flex';
-    document.querySelectorAll('.info-popup').forEach(p => p.style.display = 'none');
-  }
-</script>
+  <div class="background-gradient"></div>
+
+  <div class="card">
+    <div class="glowing-border"></div>
+    <div class="card-content">
+      <div class="profile-image">
+        <img src="mahmoud.png" alt="صورة محمود الشخصية" onerror="this.src='https://placehold.co/100x100/4A00E0/EAEAEA?text=Mahmoud';">
+      </div>
+      <div class="card-title">
+        Mahmoud AboElfadl
+      </div>
+      <div class="card-subtitle">
+        مطور واجهات أمامية
+      </div>
+      
+      <div class="social-links">
+        
+        <div class="cyber-buttons-container">
+          <div class="radio-wrapper" onclick="window.open('https://web.facebook.com/AboElfadl.Official/', '_blank' )">
+            <div class="btn">Facebook</div>
+          </div>
+          <div class="radio-wrapper" onclick="window.open('https://www.instagram.com/aboelfadl.official/', '_blank' )">
+            <div class="btn">Instagram</div>
+          </div>
+          <div class="radio-wrapper" onclick="window.open('https://t.me/Mahmoud_IbrahimAboElfadl', '_blank' )">
+            <div class="btn">Telegram</div>
+          </div>
+          <!-- !!! تم تصحيح الرابط هنا !!! -->
+          <div class="radio-wrapper" onclick="window.open('https://github.com/iphone011012013-maker', '_blank' )">
+            <div class="btn">GitHub</div>
+          </div>
+        </div>
+
+       <div class="card-title" style="margin-top: 16px;">
+        مشاريع التسوق بالعموله
+      </div>
+       
+        <button class="button" id="openModalBtn">
+                    <span class="span">AboElfadl Store</span
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"></path></svg>
+        </button>
+
+        <button class="button" id="openClothingModalBtn">
+          <span class="span">ملابس ابو الفضل</span>
+        </button>
+
+        <button class="button" id="openaccessoriesegyptModalBtn">
+          Accessories Egypt official
+        </button>
+
+        <button class="button" onclick="window.open('https://bra-ndo.netlify.app/', '_blank' )">
+          <span class="span">BRANDO</span>
+        </button>
+
+     <div class="card-title" style="margin-top: 16px;">
+            مطور ويب 
+          </div>
+    
+            <!-- الأزرار الأساسية -->
+            <button class="button" onclick="window.open('https://aboelfadl-tools.netlify.app/', '_blank' )">
+      <span class="span">AboElfadl TOOLS</span>
+    </button>
+    
+            <button class="button" onclick="window.open('https://web-aboelfadl.netlify.app/', '_blank' )">
+      <span class="span">WEB ABOELFADL</span>
+    </button>
+    
+            <button class="button" onclick="window.open('https://mac-os-aboelfadl.netlify.app/', '_blank' )">
+      <span class="span">Mac-Os-AboElfadl</span>
+    </button>
+        
+            <button class="button" onclick="window.open('https://national-number.netlify.app/', '_blank' )">
+      <span class="span">محلل الرقم القومي</span>
+    </button>
+    
+    <!-- === بداية كود واتساب المضاف === -->
+    <div class="card-title" style="margin-top: 16px;">
+        تواصل معي واتساب
+    </div>
+
+    <div class="whatsapp-container">
+        <!-- حاوية خانة الإدخال بالتصميم المطلوب -->
+        <div id="poda">
+            <div class="input-container-glow"></div>
+            <div class="input-container-darkBorderBg"></div>
+            <div class="input-container-border"></div>
+            <div class="input-container-white"></div>
+            <!-- خانة الإدخال نفسها -->
+            <input placeholder="اكتب رسالتك هنا..." type="text" class="whatsapp-input" id="whatsappMessageInput">
+        </div>
+        
+        <!-- زر إرسال واتساب -->
+        <button class="button whatsapp-button" id="sendWhatsappBtn">
+            <span class="span">إرسال عبر واتساب</span>
+            <!-- أيقونة واتساب (يمكنك استبدالها بـ SVG إذا أردت) -->
+            <svg class="icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.06 21.94L7.31 20.58C8.76 21.39 10.37 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2ZM16.57 14.83C16.31 15.1 15.93 15.22 15.5 15.28C15.14 15.33 14.65 15.36 14.24 15.2C13.83 15.04 13.29 14.85 12.63 14.59C11.12 14.01 9.94 12.83 9.77 12.61C9.6 12.39 8.8 11.4 8.8 10.26C8.8 9.12 9.54 8.42 9.77 8.19C10 7.96 10.33 7.9 10.6 7.9C10.74 7.9 10.87 7.9 10.99 7.91C11.23 7.91 11.43 7.9 11.59 8.24C11.77 8.6 12.18 9.68 12.27 9.83C12.36 9.98 12.42 10.1 12.33 10.25C12.24 10.4 12.18 10.49 12.03 10.67C11.88 10.85 11.74 10.99 11.59 11.17C11.44 11.35 11.27 11.54 11.46 11.8C11.64 12.06 12.18 12.81 12.92 13.48C13.82 14.3 14.6 14.62 14.89 14.73C15.18 14.84 15.42 14.82 15.59 14.65C15.76 14.48 16.21 13.96 16.44 13.68C16.67 13.4 16.89 13.34 17.14 13.34C17.39 13.34 18.2 13.73 18.44 13.96C18.68 14.2 18.68 14.52 18.59 14.67C18.5 14.83 16.83 15.1 16.57 14.83Z"></path></svg>
+        </button>
+    </div>
+    <!-- === نهاية كود واتساب المضاف === -->
+
+    </div>
+  </div>
+
+  <!-- === نافذة المتجر (الأصلية) === -->
+  <div class="modal-overlay" id="storeModal">
+    <div class="modal-content">
+      <img src="AboElfadlStore.png" alt="شعار متجر أبوالفضل" onerror="this.src='https://placehold.co/120x120/8E2DE2/EAEAEA?text=Store';">
+      <h3>AboElfadl Store</h3>
+      <p>متجر متخصص في بيع جميع إكسسوارات الهواتف المحمولة بأفضل جودة وأنسب الأسعار.</p>
+      <div class="modal-buttons">
+        <button class="button" onclick="window.open('https://web.facebook.com/AboElfadl.store.Official', '_blank' )">فيسبوك</button>
+        <button class="button" onclick="window.open('https://www.instagram.com/aboelfadl.store.official/', '_blank' )">انستغرام</button>
+        <button class="button" onclick="window.open('https://cezma.com/store/AboElfadl-Store', '_blank' )">متجر</button>
+      </div>
+      <button class="button close-button" id="closeModalBtn">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- === نافذة الملابس === -->
+  <div class="modal-overlay" id="clothingModal">
+    <div class="modal-content">
+      <img src="ملابس.png" alt="شعار ملابس أبو الفضل" onerror="this.src='https://placehold.co/120x120/2c2c2c/EAEAEA?text=Clothing';">
+      <h3>ملابس أبو الفضل (Clothing)</h3>
+      <p>متجر متخصص في الأزياء الرجالية والتصاميم الحصرية. بيع إلكتروني.</p>
+      <div class="modal-buttons">
+        <button class="button" onclick="window.open('https://web.facebook.com/AboElfadl.Clothing.Official', '_blank' )">فيسبوك</button>
+        <button class="button" onclick="window.open('https://www.instagram.com/AboElfadl.Clothing.Official', '_blank' )">انستغرام</button>
+        <button class="button" onclick="window.open('https://cezma.com/store/aboelfadl.clothing', '_blank' )">المتجر (Cezma)</button>
+      </div>
+      <button class="button close-button" id="closeClothingModalBtn">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- === نافذة Accessories Egypt (تم تعديل زر الإغلاق) === -->
+  <div class="modal-overlay" id="accessoriesegyptModal">
+    <div class="modal-content">
+      <!-- تم تعديل النص البديل والصورة الاحتياطية -->
+      <img src="AccessoriesEgyptofficial.png" alt="شعار Accessories Egypt" onerror="this.src='https://placehold.co/120x120/2c2c2c/EAEAEA?text=Accessories';">
+      <h3>Accessories Egypt Official</h3>
+      <p>متجر متخصص في الأزياء الرجالية والتصاميم الحصرية. بيع إلكتروني.</p>
+      <div class="modal-buttons">
+        <button class="button" onclick="window.open('https://web.facebook.com/Accessories.Egypt.official/', '_blank' )">فيسبوك</button>
+        <button class="button" onclick="window.open('https://www.instagram.com/accessories.egypt.official/', '_blank' )">انستغرام</button>
+        <button class="button" onclick="window.open('https://cezma.com/store/Accessories.Egypt.official', '_blank' )">المتجر (Cezma)</button>
+      </div>
+      <!-- !!! تم تصحيح الـ ID هنا !!! -->
+      <button class="button close-button" id="closeaccessoriesegyptModalBtn">إغلاق</button>
+    </div>
+  </div>
+
+
+       
+
+  <!-- === كود JavaScript للمتجر === -->
+  <script>
+    const storeModal = document.getElementById('storeModal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    if(openModalBtn) {
+      openModalBtn.addEventListener('click', () => storeModal.classList.add('active'));
+    }
+    if(closeModalBtn) {
+      closeModalBtn.addEventListener('click', () => storeModal.classList.remove('active'));
+    }
+    if(storeModal) {
+      storeModal.addEventListener('click', (e) => {
+        if (e.target === storeModal) {
+          storeModal.classList.remove('active');
+        }
+      });
+    }
+  </script>
+
+  <!-- === كود JavaScript للملابس === -->
+  <script>
+    const clothingModal = document.getElementById('clothingModal');
+    const openClothingModalBtn = document.getElementById('openClothingModalBtn');
+    const closeClothingModalBtn = document.getElementById('closeClothingModalBtn');
+
+    if(openClothingModalBtn) {
+      openClothingModalBtn.addEventListener('click', () => clothingModal.classList.add('active'));
+    }
+    if(closeClothingModalBtn) {
+      closeClothingModalBtn.addEventListener('click', () => clothingModal.classList.remove('active'));
+    }
+    if(clothingModal) {
+      clothingModal.addEventListener('click', (e) => {
+        if (e.target === clothingModal) {
+          clothingModal.classList.remove('active');
+        }
+      });
+    }
+  </script>
+
+<!-- === كود JavaScript لـ Accessories === -->
+  <script>
+    const accessoriesegyptModal = document.getElementById('accessoriesegyptModal');
+    const openaccessoriesegyptModalBtn = document.getElementById('openaccessoriesegyptModalBtn');
+    // الكود هنا يبحث عن الـ ID الصحيح
+    const closeaccessoriesegyptModalBtn = document.getElementById('closeaccessoriesegyptModalBtn');
+
+    if(openaccessoriesegyptModalBtn) {
+      openaccessoriesegyptModalBtn.addEventListener('click', () => accessoriesegyptModal.classList.add('active'));
+    }
+    // الآن هذا الكود سيعمل لأن الـ ID في HTML صحيح
+    if(closeaccessoriesegyptModalBtn) {
+      closeaccessoriesegyptModalBtn.addEventListener('click', () => accessoriesegyptModal.classList.remove('active'));
+    }
+    if(accessoriesegyptModal) {
+      accessoriesegyptModal.addEventListener('click', (e) => {
+        if (e.target === accessoriesegyptModal) {
+          accessoriesegyptModal.classList.remove('active');
+        }
+      });
+    }
+  </script>
+
+  <!-- === كود JavaScript الخاص بواتساب === -->
+  <script>
+    const sendWhatsappBtn = document.getElementById('sendWhatsappBtn');
+    const whatsappMessageInput = document.getElementById('whatsappMessageInput');
+
+    if (sendWhatsappBtn && whatsappMessageInput) {
+      sendWhatsappBtn.addEventListener('click', () => {
+        const message = whatsappMessageInput.value;
+        if (message.trim() === "") {
+          // يمكنك إضافة رسالة خطأ هنا إذا أردت
+          whatsappMessageInput.focus();
+          return;
+        }
+        
+        // ترميز الرسالة لإرسالها في الرابط
+        const encodedMessage = encodeURIComponent(message);
+        // الرقم مع كود الدولة (مصر)
+        const phoneNumber = '201093650351'; 
+        
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        
+        // فتح الرابط في نافذة جديدة
+        window.open(whatsappUrl, '_blank');
+      });
+    }
+  </script>
+
 </body>
+
 </html>
