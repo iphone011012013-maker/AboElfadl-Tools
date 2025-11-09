@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AboElfadl Tools</title>
-	<!-- Open Graph (Facebook, WhatsApp, Telegram, LinkedIn, etc.) -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AboElfadl Tools</title>
+
+<!-- Canonical & Language -->
+<link rel="canonical" href="https://AboElfadl-tools.netlify.app/" />
+<link rel="alternate" href="https://AboElfadl-tools.netlify.app/" hreflang="ar" />
+
+<!-- Open Graph (Facebook, WhatsApp, Telegram, LinkedIn, etc.) -->
 <meta property="og:title" content="AboElfadl Tools - أدوات ذكية للمطورين والمستخدمين 🚀" />
 <meta property="og:description" content="اكتشف موقع AboElfadl Tools — مكتبة ضخمة من الأدوات الذكية للمطورين والمستخدمين: من أدوات البرمجة والذكاء الاصطناعي إلى إنشاء الأكواد والروابط، وتحرير النصوص، والخدمات التقنية، وألعاب ممتعة كلها في مكان واحد ⚡" />
 <meta property="og:image" content="https://AboElfadl-tools.netlify.app/icons/mahmoud.jpg" />
@@ -29,13 +34,28 @@
 <meta name="keywords" content="AboElfadl Tools, أدوات مطورين, ذكاء اصطناعي, AI Tools, محرر أكواد, HTML, أدوات ويب, QR, Telegram, ChatGPT, محمود أبو الفضل" />
 <meta name="author" content="Mahmoud AboElfadl" />
 
-<!-- Favicon & Theme -->
-<link rel="icon" href="https://AboElfadl-tools.netlify.app/icons/mahmoud.jpg" type="image/x-icon" />
+<!-- Favicon & Apple Icon -->
+<link rel="icon" href="https://AboElfadl-tools.netlify.app/icons/mahmoud.jpg" type="image/png" />
+<link rel="apple-touch-icon" href="https://AboElfadl-tools.netlify.app/icons/mahmoud-192.png" />
+
+<!-- Theme & Mobile -->
 <meta name="theme-color" content="#FFD500" />
+<meta name="mobile-web-app-capable" content="yes" />
 
 <!-- Indexing & Responsive -->
 <meta name="robots" content="index, follow" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Preconnect & Preload (performance) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="preload" href="https://AboElfadl-tools.netlify.app/icons/mahmoud.jpg" as="image" />
+
+<!-- External icons (consider SRI if hosting from a CDN you trust) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="" crossorigin="anonymous" />
+
+<!-- Manifest & PWA (ensure manifest.json includes proper icons & sizes) -->
+<link rel="manifest" href="/manifest.json" />
 
 <!-- JSON-LD (Organization / Website) for richer search result -->
 <script type="application/ld+json">
@@ -56,25 +76,22 @@
   }
 }
 </script>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="icons/mahmoud.jpg" type="image/png">
-	<script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-            // Registration was successful
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          }, function(err) {
-            // registration failed :(
-            console.log('ServiceWorker registration failed: ', err);
-          });
-        });
-      }
-    </script>
+
+<!-- Service Worker registration (defer to load) -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+      console.log('ServiceWorker registered with scope:', registration.scope);
+    }).catch(function(err) {
+      console.log('ServiceWorker registration failed:', err);
+    });
+  });
+}
+</script>
+
+<!-- Optional: Basic Content Security Policy (recommended to set via HTTP header on server) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' data: https:;">
     <style>
         body {
             font-family: 'Cairo', sans-serif;
