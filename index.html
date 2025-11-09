@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <!-- Google Tag Manager -->
+<head>
+  <!-- Google Tag Manager (head) -->
   <script>
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -99,657 +101,236 @@
   }
   </script>
 
-  <!-- Optional: Basic CSP -->
+  <!-- Optional: Basic CSP (configure via server headers for best practice) -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' data: https:;">
-</head>
-    <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #000000; /* خلفية سوداء */
-            color: #f0f0f0; /* لون نص فاتح (رمادي فاتح جداً) */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0px;
-            padding: 0px;
-            box-sizing: border-box;
-            position: relative; /* لتمكين وضع الأزرار بشكل مطلق */
-        }
-        .container {
-            background-color: #1a1a1a; /* لون أغمق قليلاً للحاوية (أسود داكن جداً) */
-            padding: 0px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); /* ظل ذهبي خفيف */
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
-            border: 1px solid #333333; /* حدود خفيفة للحاوية */
-        }
-        h1 {
-            color: #FFD700; /* لون ذهبي مميز للعنوان */
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* ظل نص داكن */
-        }
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .tool-button {
-            background-color: #FFD700; /* لون ذهبي للأزرار */
-            color: #000000; /* لون أسود للنص على الأزرار */
-            padding: 10px 0px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, border 0.3s ease; /* أضف border للtransition */
-            text-decoration: none; /* لإزالة خط الروابط */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-weight: bold;
-            box-sizing: border-box; /* لضمان أن البادينج والحدود لا تزيد من حجم الزر */
-        }
-        .tool-button:hover {
-            background-color: #FFEB80; /* لون ذهبي أفتح عند التمرير */
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); /* ظل ذهبي عند التمرير */
-        }
-        .tool-button i {
-            font-size: 30px; /* حجم الأيقونة */
-            color: #000000; /* لون الأيقونة (أسود) */
-        }
-        .tool-button img { /* للصور التي تستخدم كأيقونات */
-            width: 30px;
-            height: 30px;
-        }
 
-        /* ستايل لعنوان FAKE TEST */
-        .fake-test-heading {
-            color: #FFD700; /* لون ذهبي */
-            font-size: 3em; /* حجم كبير */
-            font-weight: bold;
-            margin-top: 40px; /* مسافة من الأعلى */
-            margin-bottom: 20px; /* مسافة من الأسفل */
-            text-shadow: 3px 3px 7px rgba(255, 215, 0, 0.4); /* ظل ذهبي واضح */
-            text-align: center; /* توسيط النص */
-        }
-
-        /* ستايل خاص بالفوتر لجعله نصًا عاديًا */
-        .footer {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #aaa;
-            cursor: default; /* مؤشر الفأرة العادي */
-            text-decoration: none; /* إزالة خط تحت النص */
-        }
-        .footer:hover {
-            color: #aaa; /* يبقى نفس اللون عند التمرير */
-        }
-
-
-        /* حاوية الأزرار العلوية اليسرى */
-        .top-left-buttons {
-            position: absolute;
-            top: 20px;
-            left: 5px;
-            display: flex;
-            flex-direction: column; /* الأزرار تحت بعضها */
-            gap: 10px; /* المسافة بين الأزرار */
-            z-index: 100;
-        }
-
-        /* ستايل الأزرار العلوية (الضبط والملف الشخصي والسجل) */
-        .top-left-button {
-            background-color: #333333; /* لون خلفية الزر */
-            color: #FFD700; /* لون ذهبي للأيقونة */
-            border: 2px solid #FFD700; /* حدود ذهبية */
-            border-radius: 50%; /* لجعل الزر دائريًا */
-            width: 50px; /* حجم الزر */
-            height: 50px; /* حجم الزر */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5em; /* حجم الأيقونة */
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-        }
-        .top-left-button:hover {
-            background-color: #444444;
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-        }
-
-        /* ستايل مربع البحث الجديد */
-        .search-area {
-            width: 100%;
-            margin-bottom: 20px; /* مسافة تحت مربع البحث */
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
-            padding: 0 10px; /* بادينج داخلي للمحاذاة داخل الكونتينر */
-            box-sizing: border-box;
-        }
-
-        .search-input {
-            flex-grow: 1; /* لتوسيع مربع الإدخال */
-            padding: 10px;
-            border: 1px solid #FFD700; /* حدود ذهبية */
-            border-radius: 8px;
-            background-color: #2a2a2a; /* خلفية داكنة */
-            color: #f0f0f0; /* نص فاتح */
-            font-size: 1em;
-            outline: none; /* إزالة الإطار عند التركيز */
-        }
-
-        .search-button, .reset-button {
-            padding: 0px 5px;
-            background-color: #FFD700; /* لون ذهبي للأزرار */
-            color: #000000; /* لون أسود للنص */
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .search-button:hover, .reset-button:hover {
-            background-color: #FFEB80;
-            transform: translateY(-2px);
-        }
-
-        /* ستايل للأزرار المطابقة للبحث */
-        .tool-button.highlight-button {
-            border: 2px solid #00FF00 !important; /* إطار أخضر مميز */
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6) !important; /* ظل أخضر */
-            transform: scale(1.03); /* تكبير طفيف */
-        }
-
-        /* ستايل للأزرار المخفية (عام) */
-        .tool-button.hidden-button {
-            display: none !important; /* إخفاء الزر */
-        }
-        /* ستايل الزر المخفي افتراضيا */
-        .hidden-by-default {
-            display: none; /* هذا الكلاس سيجعل الزر مخفيًا عند تحميل الصفحة */
-        }
-
-
-        /* ستايل النافذة المنبثقة (Modal) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 200;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #2a2a2a;
-            margin: 15px auto; /* تقليل المارجن العلوي/السفلي */
-            padding: 30px;
-            border: 1px solid #FFD700;
-            border-radius: 10px;
-            width: 90%; /* زيادة العرض قليلاً */
-            max-width: 500px; /* زيادة أقصى عرض */
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            position: relative;
-            animation: fadeIn 0.3s ease-out;
-        }
-        .modal-content h2 {
-            color: #FFD700;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-        .modal-content p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-            color: #e0e0e0;
-        }
-        .modal-content strong {
-            color: #FFD700;
-        }
-
-        .modal-buttons {
-            display: flex;
-            justify-content: center; /* توسيط الأزرار */
-            gap: 15px; /* مسافة بين الأزرار */
-            margin-top: 25px;
-            flex-wrap: wrap; /* للسماح للأزرار بالانتقال إلى سطر جديد في الشاشات الصغيرة */
-        }
-        .modal-buttons button {
-            background-color: #FFD700;
-            color: #000000;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            white-space: nowrap; /* منع انقسام النص في الأزرار */
-        }
-        .modal-buttons button:hover {
-            background-color: #FFEB80;
-            transform: translateY(-2px);
-        }
-        /* الزر الأول في Modal Buttons (مثال: زر الإلغاء) */
-        .modal-buttons button:first-child {
-            background-color: #555555;
-            color: #e0e0e0;
-        }
-        .modal-buttons button:first-child:hover {
-            background-color: #777777;
-        }
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            color: #FFD700;
-            font-size: 2em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .close-button:hover {
-            color: #FFEB80;
-        }
-
-        /* ستايل أقسام المودال الجديدة */
-        .modal-section {
-            margin-top: 30px;
-            border-top: 1px solid #444;
-            padding-top: 20px;
-            text-align: left; /* محاذاة النص لليسار داخل القسم */
-        }
-        .modal-section h3 {
-            color: #FFD700;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            text-align: center; /* توسيط عنوان القسم */
-        }
-        .modal-section .section-buttons {
-            display: flex;
-            flex-direction: column; /* الأزرار عموديا */
-            gap: 15px; /* مسافة بين الأزرار */
-        }
-        .modal-section .section-button-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px; /* مسافة بين الزر وزر النسخ */
-        }
-        .modal-section .section-button {
-            background-color: #FFD700;
-            color: #000000;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: bold;
-            flex-grow: 1; /* لتوسيع الزر ليملأ المساحة المتاحة */
-        }
-        .modal-section .section-button:hover {
-            background-color: #FFEB80;
-            transform: translateY(-2px);
-        }
-        .copy-button { /* ستايل موحد لأزرار النسخ */
-            background-color: #555555;
-            color: #FFD700;
-            padding: 2px 5px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .copy-button:hover {
-            background-color: #777777;
-            transform: translateY(-2px);
-        }
-        .copy-button i {
-            color: #FFD700; /* لون أيقونة النسخ ذهبي */
-        }
-
-        /* ستايل قائمة سجل البحث */
-        .search-history-list, .shortener-history-list {
-            list-style: none;
-            padding: 0;
-            max-height: 250px; /* ارتفاع أقصى للقائمة مع شريط تمرير */
-            overflow-y: auto; /* شريط تمرير عمودي */
-            margin-bottom: 20px;
-            text-align: right; /* محاذاة النص لليمين داخل القائمة */
-            background-color: #2a2a2a;
-            border-radius: 8px;
-            padding: 10px;
-            border: 1px solid #444;
-        }
-        .search-history-list li, .shortener-history-list li {
-            background-color: #333333;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            word-break: break-all; /* كسر الكلمات الطويلة لتجنب تجاوز العنصر */
-            direction: ltr; /* لضمان عرض الروابط والنصوص الأجنبية بشكل صحيح */
-        }
-        .search-history-list li:last-child, .shortener-history-list li:last-child {
-            margin-bottom: 0;
-        }
-        .search-history-list li span, .shortener-history-list li .link-item-text {
-            flex-grow: 1;
-            color: #f0f0f0;
-            text-align: right;
-            direction: rtl; /* لضمان محاذاة النص العربي لليمين */
-            padding-right: 10px; /* مسافة بين النص وزر النسخ */
-        }
-        .shortener-history-list li .link-pair {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            flex-grow: 1;
-        }
-        .shortener-history-list li .link-pair span {
-            display: block;
-            width: 100%;
-            text-align: right;
-            direction: ltr; /* لضمان عرض الروابط */
-            word-break: break-all;
-        }
-        .shortener-history-list li .link-pair span.original-link {
-            font-size: 0.85em;
-            color: #aaaaaa;
-        }
-        .shortener-history-list li .copy-buttons-wrapper {
-            display: flex;
-            gap: 5px;
-        }
-        /* ستايل مربعات الاختيار داخل القائمة */
-        .history-checkbox {
-            margin-left: 10px;
-            width: 18px; /* حجم أكبر لمربع الاختيار */
-            height: 18px;
-            cursor: pointer;
-            accent-color: #FFD700; /* لون مربع الاختيار عند التحديد */
-        }
-
-        /* ستايل حقول فلترة السجل وأزرار الفرز */
-        .history-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-            justify-content: center;
-            align-items: center;
-        }
-        .history-controls input[type="text"] {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #FFD700;
-            border-radius: 8px;
-            background-color: #333333;
-            color: #f0f0f0;
-            font-size: 0.95em;
-            outline: none;
-            max-width: 200px; /* حد أقصى للعرض */
-        }
-        .history-controls button, .history-controls select {
-            background-color: #FFD700;
-            color: #000000;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .history-controls button:hover, .history-controls select:hover {
-            background-color: #FFEB80;
-            transform: translateY(-2px);
-        }
-        .history-controls select {
-            background-color: #555555;
-            color: #f0f0f0;
-            border: 1px solid #FFD700;
-            appearance: none; /* إزالة ستايل المتصفح الافتراضي */
-            padding-right: 25px; /* مسافة لرمز السهم المخصص */
-            background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFD700" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-            background-repeat: no-repeat;
-            background-position: left 8px center;
-            background-size: 15px;
-        }
-        .history-controls select option {
-            background-color: #555555;
-            color: #f0f0f0;
-        }
-
-        /* ستايل لقسم اختصار الروابط داخل المودال */
-        .link-shortener-input {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #FFD700;
-            border-radius: 8px;
-            background-color: #333333;
-            color: #f0f0f0;
-            font-size: 1em;
-            direction: ltr; /* لضمان صحة إدخال الروابط */
-        }
-
-        .shorten-button {
-            background-color: #FFD700;
-            color: #000000;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .shorten-button:hover {
-            background-color: #FFEB80;
-            transform: translateY(-2px);
-        }
-
-        .shortened-link-display {
-            background-color: #333333;
-            color: #00FF00; /* لون أخضر للرابط المختصر */
-            padding: 10px;
-            border-radius: 8px;
-            word-break: break-all;
-            margin-top: 15px;
-            min-height: 40px; /* لضمان ظهور الخلفية حتى لو فارغة */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1em;
-            direction: ltr; /* لضمان صحة عرض الرابط المختصر */
-            text-align: center;
-        }
-        .shortened-link-display a {
-            color: #00FF00; /* لون أخضر للرابط المختصر */
-            text-decoration: none;
-            font-weight: bold;
-            margin-right: 10px; /* مسافة بين الرابط وزر النسخ */
-        }
-        .shortened-link-display a:hover {
-            text-decoration: underline;
-        }
-        .error-message {
-            color: #FF0000; /* لون أحمر لرسائل الخطأ */
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .header-content {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* لتوسيط المحتوى أفقيا */
-    padding: 20px;
-    flex-wrap: wrap; /* للسماح للعناصر بالانتقال إلى سطر جديد في الشاشات الصغيرة */
-    gap: 20px; /* مسافة بين الصورة والاسم */
-}
-
-.profile-container {
-    width: 150px; /* حجم الفريم الدائري */
-    height: 150px;
-    border-radius: 50%; /* لجعل الفريم دائريا */
-    overflow: hidden; /* لإخفاء أي جزء من الصورة خارج الدائرة */
-    border: 5px solid #ffba00; /* لون الفريم (يمكنك تغييره) */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: rotate 10s linear infinite; /* حركة الدوران */
-}
-
-.profile-pic {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* لضمان تغطية الصورة للمساحة دون تشويه */
-    display: block;
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
+  <!-- ====== Your Styles ====== -->
+  <style>
+    /* (Your full CSS — kept exactly as you provided) */
+    body {
+        font-family: 'Cairo', sans-serif;
+        background-color: #000000;
+        color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+        position: relative;
     }
-    to {
-        transform: rotate(360deg);
+    .container {
+        background-color: #1a1a1a;
+        padding: 0px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+        border: 1px solid #333333;
     }
-}
+    h1 {
+        color: #FFD700;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+    .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .tool-button {
+        background-color: #FFD700;
+        color: #000000;
+        padding: 10px 0px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, border 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+    .tool-button:hover {
+        background-color: #FFEB80;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+    .tool-button i {
+        font-size: 30px;
+        color: #000000;
+    }
+    .tool-button img {
+        width: 30px;
+        height: 30px;
+    }
+    .fake-test-heading {
+        color: #FFD700;
+        font-size: 3em;
+        font-weight: bold;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        text-shadow: 3px 3px 7px rgba(255, 215, 0, 0.4);
+        text-align: center;
+    }
+    .footer {
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: #aaa;
+        cursor: default;
+        text-decoration: none;
+    }
+    .footer:hover {
+        color: #aaa;
+    }
+    .top-left-buttons {
+        position: absolute;
+        top: 20px;
+        left: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 100;
+    }
+    .top-left-button {
+        background-color: #333333;
+        color: #FFD700;
+        border: 2px solid #FFD700;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .top-left-button:hover {
+        background-color: #444444;
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    }
+    .search-area {
+        width: 100%;
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+    .search-input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #FFD700;
+        border-radius: 8px;
+        background-color: #2a2a2a;
+        color: #f0f0f0;
+        font-size: 1em;
+        outline: none;
+    }
+    .search-button, .reset-button {
+        padding: 0px 5px;
+        background-color: #FFD700;
+        color: #000000;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .search-button:hover, .reset-button:hover {
+        background-color: #FFEB80;
+        transform: translateY(-2px);
+    }
+    .tool-button.highlight-button {
+        border: 2px solid #00FF00 !important;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.6) !important;
+        transform: scale(1.03);
+    }
+    .tool-button.hidden-button {
+        display: none !important;
+    }
+    .hidden-by-default { display: none; }
 
-.name-container {
-    position: relative;
-    /* قم بإزالة الـ height الثابتة هذه. سيتكيف الارتفاع مع محتوى النص. */
-    /* height: 50px; */
-    /* بدلاً من ذلك، يمكننا استخدام min-height لضمان وجود حد أدنى من الارتفاع إذا لزم الأمر */
-    min-height: 50px; /* ضمان ارتفاع أدنى، ولكن ليس ثابتًا يقيد المحتوى */
-    display: flex; /* اجعله flex container لكي يتمكن h1 من التوسع بشكل صحيح */
-    align-items: center; /* لتوسيط النص عموديًا داخل الحاوية */
-    overflow: hidden; /* ابقِ هذا كما هو */
-}
-
-.typing-effect {
-    font-size: 2.5em; /* حجم الخط للاسم */
-    color: #FFD700; /* لون الاسم الذهبي */
-    white-space: nowrap; /* مهم لمنع انقسام الكلمات */
-    overflow: hidden; /* مهم لتأثير الكتابة */
-    animation: typing 4s steps(20, end) infinite,
-               blink-caret .75s step-end infinite;
-    width: 0; /* يبدأ بعرض صفر */
-    direction: ltr; /* للتأكد من الكتابة من الشمال لليمين */
-}
-
-/* The typing effect */
-@keyframes typing {
-    from { width: 50% }
-    to { width: 100% }
-}
-
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: orange }
-}
-.modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6); 
-        }
-
-        .modal-content {
-            background-color: #ffffff;
-            color: #333;
-            margin: 15% auto; 
-            padding: 25px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        .modal-content h2 {
-            color: #d9534f; 
-            margin-top: 0;
-        }
-
-        .warning-text {
-            color: #444;
-            font-size: 1.1em;
-            font-weight: 500;
-            line-height: 1.6;
-        }
-
-        .modal-button {
-            background-color: #d9534f;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        .modal-button:hover {
-            background-color: #c9302c;
-        }
-    </style>
+    .modal { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
+    .modal-content { background-color: #2a2a2a; margin: 15px auto; padding: 30px; border: 1px solid #FFD700; border-radius: 10px; width: 90%; max-width: 500px; text-align: center; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); position: relative; animation: fadeIn 0.3s ease-out; }
+    .modal-content h2 { color: #FFD700; margin-bottom: 20px; font-size: 1.8em; }
+    .modal-content p { margin-bottom: 15px; line-height: 1.6; color: #e0e0e0; }
+    .modal-content strong { color: #FFD700; }
+    .modal-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
+    .modal-buttons button { background-color: #FFD700; color: #000000; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold; transition: background-color 0.3s ease, transform 0.2s ease; white-space: nowrap; }
+    .modal-buttons button:hover { background-color: #FFEB80; transform: translateY(-2px); }
+    .modal-buttons button:first-child { background-color: #555555; color: #e0e0e0; }
+    .modal-buttons button:first-child:hover { background-color: #777777; }
+    .close-button { position: absolute; top: 10px; right: 15px; color: #FFD700; font-size: 2em; font-weight: bold; cursor: pointer; transition: color 0.3s; }
+    .close-button:hover { color: #FFEB80; }
+    .modal-section { margin-top: 30px; border-top: 1px solid #444; padding-top: 20px; text-align: left; }
+    .modal-section h3 { color: #FFD700; font-size: 1.5em; margin-bottom: 15px; text-align: center; }
+    .modal-section .section-buttons { display: flex; flex-direction: column; gap: 15px; }
+    .modal-section .section-button-wrapper { display: flex; align-items: center; gap: 10px; }
+    .modal-section .section-button { background-color: #FFD700; color: #000000; padding: 12px 20px; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; flex-grow: 1; }
+    .modal-section .section-button:hover { background-color: #FFEB80; transform: translateY(-2px); }
+    .copy-button { background-color: #555555; color: #FFD700; padding: 2px 5px; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; display: flex; align-items: center; justify-content: center; }
+    .copy-button:hover { background-color: #777777; transform: translateY(-2px); }
+    .copy-button i { color: #FFD700; }
+    .search-history-list, .shortener-history-list { list-style: none; padding: 0; max-height: 250px; overflow-y: auto; margin-bottom: 20px; text-align: right; background-color: #2a2a2a; border-radius: 8px; padding: 10px; border: 1px solid #444; }
+    .search-history-list li, .shortener-history-list li { background-color: #333333; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; word-break: break-all; direction: ltr; }
+    .search-history-list li span, .shortener-history-list li .link-item-text { flex-grow: 1; color: #f0f0f0; text-align: right; direction: rtl; padding-right: 10px; }
+    .shortener-history-list li .link-pair { display: flex; flex-direction: column; align-items: flex-end; flex-grow: 1; }
+    .shortener-history-list li .link-pair span { display: block; width: 100%; text-align: right; direction: ltr; word-break: break-all; }
+    .shortener-history-list li .link-pair span.original-link { font-size: 0.85em; color: #aaaaaa; }
+    .shortener-history-list li .copy-buttons-wrapper { display: flex; gap: 5px; }
+    .history-checkbox { margin-left: 10px; width: 18px; height: 18px; cursor: pointer; accent-color: #FFD700; }
+    .history-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; justify-content: center; align-items: center; }
+    .history-controls input[type="text"] { flex-grow: 1; padding: 10px; border: 1px solid #FFD700; border-radius: 8px; background-color: #333333; color: #f0f0f0; font-size: 0.95em; outline: none; max-width: 200px; }
+    .history-controls button, .history-controls select { background-color: #FFD700; color: #000000; padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: bold; transition: background-color 0.3s ease, transform 0.2s ease; }
+    .history-controls button:hover, .history-controls select:hover { background-color: #FFEB80; transform: translateY(-2px); }
+    .history-controls select { background-color: #555555; color: #f0f0f0; border: 1px solid #FFD700; appearance: none; padding-right: 25px; background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFD700" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); background-repeat: no-repeat; background-position: left 8px center; background-size: 15px; }
+    .history-controls select option { background-color: #555555; color: #f0f0f0; }
+    .link-shortener-input { width: calc(100% - 20px); padding: 10px; margin-bottom: 15px; border: 1px solid #FFD700; border-radius: 8px; background-color: #333333; color: #f0f0f0; font-size: 1em; direction: ltr; }
+    .shorten-button { background-color: #FFD700; color: #000000; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; font-weight: bold; margin-bottom: 15px; }
+    .shorten-button:hover { background-color: #FFEB80; transform: translateY(-2px); }
+    .shortened-link-display { background-color: #333333; color: #00FF00; padding: 10px; border-radius: 8px; word-break: break-all; margin-top: 15px; min-height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.1em; direction: ltr; text-align: center; }
+    .shortened-link-display a { color: #00FF00; text-decoration: none; font-weight: bold; margin-right: 10px; }
+    .shortened-link-display a:hover { text-decoration: underline; }
+    .error-message { color: #FF0000; margin-top: 10px; font-size: 0.9em; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    .header-content { display: flex; align-items: center; justify-content: center; padding: 20px; flex-wrap: wrap; gap: 20px; }
+    .profile-container { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 5px solid #ffba00; display: flex; justify-content: center; align-items: center; animation: rotate 10s linear infinite; }
+    .profile-pic { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .name-container { min-height: 50px; display: flex; align-items: center; overflow: hidden; }
+    .typing-effect { font-size: 2.5em; color: #FFD700; white-space: nowrap; overflow: hidden; animation: typing 4s steps(20, end) infinite, blink-caret .75s step-end infinite; width: 0; direction: ltr; }
+    @keyframes typing { from { width: 50% } to { width: 100% } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange } }
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6); }
+    .modal-content { background-color: #ffffff; color: #333; margin: 15% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); animation: fadeIn 0.3s; }
+    .modal-content h2 { color: #d9534f; margin-top: 0; }
+    .warning-text { color: #444; font-size: 1.1em; font-weight: 500; line-height: 1.6; }
+    .modal-button { background-color: #d9534f; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 20px; font-weight: bold; }
+    .modal-button:hover { background-color: #c9302c; }
+  </style>
 </head>
 <body>
-	  <noscript>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWJ8TQR3"
       height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
-  <!-- End Googl
+
 	
     <div class="top-left-buttons">
         <div class="top-left-button" id="settingsBtn">
