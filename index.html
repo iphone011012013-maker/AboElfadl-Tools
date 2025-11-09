@@ -218,12 +218,79 @@
     .typing-effect { font-size: 2.5em; color: #FFD700; white-space: nowrap; overflow: hidden; animation: typing 4s steps(20, end) infinite, blink-caret .75s step-end infinite; width: 0; direction: ltr; }
     @keyframes typing { from { width: 50% } to { width: 100% } }
     @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange } }
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6); }
-    .modal-content { background-color: #ffffff; color: #333; margin: 15% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); animation: fadeIn 0.3s; }
-    .modal-content h2 { color: #d9534f; margin-top: 0; }
-    .warning-text { color: #444; font-size: 1.1em; font-weight: 500; line-height: 1.6; }
-    .modal-button { background-color: #d9534f; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 20px; font-weight: bold; }
-    .modal-button:hover { background-color: #c9302c; }
+   /* Modal styles (self-contained) */
+.aw-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 20px;
+}
+.aw-modal {
+  width: 100%;
+  max-width: 720px;
+  background: linear-gradient(180deg,#111,#1b1b1b);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  border: 2px solid rgba(255,215,0,0.08);
+  overflow: hidden;
+  font-family: 'Cairo', system-ui, Arial, sans-serif;
+}
+.aw-modal-header {
+  background: linear-gradient(90deg,#ffcc00,#ff8a00);
+  color: #111;
+  padding: 14px 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.aw-modal-header .warn-ico {
+  width:40px;height:40px;border-radius:8px;
+  display:inline-grid;place-items:center;font-weight:900;
+  background:rgba(0,0,0,0.08);
+}
+.aw-modal-body {
+  padding: 18px;
+  line-height: 1.55;
+  font-size: 15px;
+  color: #e6e6e6;
+}
+.aw-modal-body p { margin: 0 0 12px 0; }
+.aw-modal-footer {
+  display:flex;
+  gap:10px;
+  justify-content: flex-end;
+  padding: 12px 18px 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+}
+.aw-btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 0;
+  font-weight:700;
+  cursor:pointer;
+}
+.aw-btn-primary {
+  background:#FFD500;color:#111;
+}
+.aw-btn-muted {
+  background:#333;color:#fff;border:1px solid rgba(255,255,255,0.04);
+}
+.aw-small {
+  font-size:13px;
+  opacity:0.85;
+  margin-right:auto;
+  align-self:center;
+}
+/* responsive */
+@media (max-width:420px){
+  .aw-modal { max-width: 95%; }
+  .aw-modal-header .warn-ico { width:34px;height:34px;font-size:14px; }
+}
   </style>
 </head>
 <body>
@@ -752,57 +819,109 @@
             </div>
         </div>
     </div>
-<div id="warningModal" class="modal">
-        <div class="modal-content">
-            <h2>🚨 تنبيه هام جداً</h2>
-            
-            <p>
-                هذا القسم <strong>📵HACKER TEST📵</strong> يحتوي على أكواد ومفاهيم لأغراض 
-                <strong>التوعية والتعليم فقط</strong>.
-            </p>
-            
-            <p>
-                استخدام هذه المعلومات في أنشطة ضارة أو غير قانونية يعرضك للمساءلة القانونية.
-            </p>
-            
-            <p class="warning-text">
-                وهذه الطرق تشبه طرق تمكُّن المخترق من اختراق بياناتك الخاصة.
-                <br>
-                <strong>توخَّ الحذر من الضغط على روابط غريبة.</strong>
-            </p>
-            
-            <button class="modal-button" id="closeModalBtn">أتفهم وأوافق على المتابعة</button>
-            </div>
+<div id="awarenessModalBackdrop" class="aw-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="awTitle" aria-describedby="awDesc">
+  <div class="aw-modal" role="document">
+    <div class="aw-modal-header">
+      <div class="warn-ico" aria-hidden="true">⚠️</div>
+      <div>
+        <div id="awTitle" style="font-weight:900;font-size:18px">تنبيه — صفحة تحذيرية</div>
+        <div style="font-size:13px;color:#111;opacity:0.9">يرجى الانتباه قبل المتابعة</div>
+      </div>
     </div>
+
+    <div class="aw-modal-body" id="awDesc">
+      <p><strong>ملاحظة مهمة:</strong> هذه الصفحة تعرض نموذجًا تحذيريًا لمحاكاة واجهات مواقع ضارة وتوضيح طرق الاحتيال. المحتوى عرضي/تحذيري فقط ولا يحتوي على أدوات هجومية فعلية.</p>
+      <p>استخدام أي محتوى من هذا الموقع ضد أشخاص آخرين أو بدون علمهم <strong>يعرضك للمساءلة القانونية</strong>. صاحب الموقع غير مسؤول عن أي إساءة استخدام.</p>
+      <p class="aw-small">يمكنك اختيار أن لا تُعرض هذه الرسالة مرة أخرى من خلال تفعيل الخيار أدناه.</p>
+    </div>
+
+    <div class="aw-modal-footer">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <input id="awDontShowAgain" type="checkbox" style="width:16px;height:16px;appearance:auto">
+        <span style="font-size:13px;color:#ddd">لا تُظهر مجددًا</span>
+      </label>
+
+      <button class="aw-btn aw-btn-muted" id="awCloseBtn">أوافق وأتابع</button>
+      <button class="aw-btn aw-btn-primary" id="awCloseAndSaveBtn">لا تُظهر هذه الرسالة مجددًا</button>
+    </div>
+  </div>
+</div>
 
 					
     <script>
-        // 1. الحصول على عناصر النافذة
-        var modal = document.getElementById("warningModal");
-        var btn = document.getElementById("closeModalBtn");
+/*
+  Warning Modal behaviour:
+  - Appears automatically on every page load by default.
+  - If user clicks "لا تُظهر هذه الرسالة مجددًا" we save a flag in localStorage
+    (key: 'awareness_modal_hide') and modal won't show again for that browser.
+  - If user clicks "أوافق وأتابع" the modal closes for this load; next page load it will appear again.
+  - You can change storage key or remove the "dont show" behavior to always force-show.
+*/
 
-        // 2. وظيفة لإغلاق النافذة
-        function closeModal() {
-            modal.style.display = "none";
-        }
+(function(){
+  const BACKDROP_ID = 'awarenessModalBackdrop';
+  const STORAGE_KEY = 'awareness_modal_hide'; // change if needed
 
-        // 3. عرض النافذة بمجرد تحميل الصفحة
-        window.onload = function() {
-            modal.style.display = "block";
-        }
+  // helper to close modal
+  function closeModal(visibleKey){
+    const bd = document.getElementById(BACKDROP_ID);
+    if (!bd) return;
+    bd.style.display = 'none';
+  }
 
-        // 4. إغلاق النافذة عند الضغط على زر "أتفهم"
-        btn.onclick = function() {
-            closeModal();
-        }
+  // show modal (used on load unless suppressed)
+  function showModal(){
+    const bd = document.getElementById(BACKDROP_ID);
+    if (!bd) return;
+    bd.style.display = 'flex';
+    // focus for accessibility
+    const closeBtn = document.getElementById('awCloseBtn');
+    if (closeBtn) closeBtn.focus();
+  }
 
-        // (اختياري) إغلاق النافذة إذا ضغط المستخدم خارج الصندوق
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
+  // on DOM ready
+  document.addEventListener('DOMContentLoaded', function(){
+    try {
+      const suppressed = localStorage.getItem(STORAGE_KEY);
+      if (suppressed === '1') {
+        // user asked to not show modal again
+        closeModal();
+        return;
+      }
+      // show modal automatically on each load by default
+      showModal();
+
+      // wire buttons
+      document.getElementById('awCloseBtn').addEventListener('click', function(){
+        // simply close for this session (will show again on next load)
+        closeModal();
+      });
+
+      document.getElementById('awCloseAndSaveBtn').addEventListener('click', function(){
+        // save preference & close
+        localStorage.setItem(STORAGE_KEY, '1');
+        closeModal();
+      });
+
+      // clicking outside modal content closes it (optional)
+      document.getElementById(BACKDROP_ID).addEventListener('click', function(e){
+        if (e.target && e.target.id === BACKDROP_ID) {
+          closeModal();
         }
-    </script>
+      });
+
+      // allow Escape to close (without saving)
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeModal();
+      });
+
+    } catch (err) {
+      // fail silently
+      console.error('Awareness modal error:', err);
+    }
+  });
+})();
+</script>
 					
 <script>
         const settingsBtn = document.getElementById('settingsBtn');
