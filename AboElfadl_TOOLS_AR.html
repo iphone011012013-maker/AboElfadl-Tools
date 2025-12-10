@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>أدوات أبو الفضل — AboElfadl Tools ⚙️</title>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- SEO & Meta Tags -->
+    <link rel="canonical" href="https://aboelfadl-tools.netlify.app/">
+    <link rel="alternate" href="https://aboelfadl-tools.netlify.app/" hreflang="ar">
+    <meta property="og:site_name" content="AboElfadl Tools" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:title" content="أدوات أبو الفضل — أدوات ذكية للمطورين والمستخدمين ⚙️ | محمود أبو الفضل">
+    <meta property="og:description" content="اكتشف موقع AboElfadl Tools — مكتبة ضخمة من الأدوات الذكية.">
+    <meta property="og:url" content="https://aboelfadl-tools.netlify.app/" />
+    <meta property="og:image" content="https://aboelfadl-tools.netlify.app/icons/ratings.png" />
+    <meta name="theme-color" content="#FFD700" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Libraries -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    /* --- Global Variables & Reset --- */
+    :root {
+        --primary-gold: #FFD700;
+        --primary-gold-dim: #cca900;
+        --bg-dark: #0a0a0a;
+        --bg-card: #141414;
+        --bg-glass: rgba(20, 20, 20, 0.7);
+        --text-light: #f3f4f6;
+        --text-muted: #9ca3af;
+        --border-glass: rgba(255, 215, 0, 0.15);
+        --glow: 0 0 15px rgba(255, 215, 0, 0.15);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Cairo', sans-serif;
+        background-color: var(--bg-dark);
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.03) 0%, transparent 20%);
+        color: var(--text-light);
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden;
+    }
+
+    /* --- Scrollbar --- */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary-gold); }
+
+    /* --- Floating Header (Top Left Actions) --- */
+    .top-left-buttons {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 1000;
+    }
+    .top-left-button {
+        background: rgba(0,0,0,0.6);
+        color: var(--primary-gold);
+        border: 1px solid var(--border-glass);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    .top-left-button:hover {
+        background: var(--primary-gold);
+        color: #000;
+        transform: translateX(5px);
+        box-shadow: var(--glow);
+    }
+
+    /* --- Main Container --- */
+    .main-wrapper {
+        width: 100%;
+        max-width: 800px;
+        padding: 20px;
+        margin-top: 20px;
+        padding-bottom: 60px;
+    }
+
+    /* --- Profile Header --- */
+    .header-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    .profile-container {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        padding: 5px;
+        background: linear-gradient(45deg, var(--primary-gold), transparent, var(--primary-gold));
+        background-size: 200% 200%;
+        animation: borderSpin 4s linear infinite;
+        position: relative;
+        z-index: 2;
+        margin-bottom: 20px;
+    }
+    .profile-pic {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid var(--bg-dark);
+        background-color: #000;
+    }
+    @keyframes borderSpin { 
+        0% { background-position: 0% 50%; } 
+        50% { background-position: 100% 50%; } 
+        100% { background-position: 0% 50%; } 
+    }
+    
+    .name-container { 
+        text-align: center; 
+    }
+    .typing-effect {
+        font-family: 'JetBrains Mono', monospace; /* Keep English name font mono for tech feel */
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-gold);
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        margin: 0;
+        display: inline-block;
+        border-right: 3px solid var(--primary-gold);
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+        direction: ltr; 
+    }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary-gold) } }
+
+    /* --- Search Area --- */
+    .search-area {
+        position: sticky;
+        top: 20px;
+        z-index: 900;
+        display: flex;
+        gap: 10px;
+        background: var(--bg-glass);
+        padding: 15px;
+        border-radius: 16px;
+        border: 1px solid var(--border-glass);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .search-input {
+        flex-grow: 1;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+        text-align: right;
+    }
+    .search-input:focus {
+        border-color: var(--primary-gold);
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+    .search-button, .reset-button {
+        padding: 0 20px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: 'Cairo', sans-serif;
+    }
+    .search-button {
+        background: var(--primary-gold);
+        color: #000;
+    }
+    .search-button:hover {
+        background: #fff;
+        box-shadow: 0 0 15px var(--primary-gold);
+    }
+    .reset-button {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: var(--text-muted);
+    }
+    .reset-button:hover {
+        border-color: #ff4444;
+        color: #ff4444;
+    }
+
+    /* --- Tools Grid --- */
+    .container {
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    h1 { display: none; } 
+
+    .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        width: 100%;
+    }
+
+    /* --- Professional Cards (Tool Buttons) --- */
+    .tool-button {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px 10px;
+        background: var(--bg-card);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 16px;
+        color: var(--text-light);
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        overflow: hidden;
+        min-height: 120px;
+    }
+    
+    .tool-button::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 3px;
+        background: var(--primary-gold);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+        transform-origin: left;
+    }
+
+    .tool-button:hover {
+        transform: translateY(-5px);
+        background: rgba(255,255,255,0.03);
+        border-color: var(--primary-gold);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    
+    .tool-button:hover::before {
+        transform: scaleX(1);
+    }
+
+    .tool-button i {
+        font-size: 2.2rem;
+        margin-bottom: 12px;
+        color: var(--primary-gold);
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        transition: 0.3s;
+    }
+    
+    .tool-button img {
+        width: 40px; height: 40px;
+        margin-bottom: 10px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 5px rgba(255,215,0,0.3));
+    }
+
+    .tool-button:hover i {
+        transform: scale(1.1);
+        color: #fff;
+    }
+
+    .tool-button.highlight-button {
+        border: 2px solid #00ff00 !important;
+        box-shadow: 0 0 20px rgba(0,255,0,0.3) !important;
+    }
+    .tool-button.hidden-button { display: none !important; }
+    .hidden-by-default { display: none; }
+
+    /* --- Section Headings (Separators) --- */
+    .fake-test-heading {
+        grid-column: 1 / -1;
+        margin: 40px 0 20px 0;
+        font-size: 1.2rem;
+        color: var(--primary-gold);
+        text-align: right;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .fake-test-heading::after {
+        content: '';
+        flex-grow: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--border-glass), transparent);
+    }
+    .fake-test-heading::before {
+        content: '■';
+        font-size: 0.8em;
+        color: var(--primary-gold);
+    }
+
+    /* --- Modals (Professional Dialogs) --- */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.85);
+        backdrop-filter: blur(5px);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .modal-content {
+        background: #1a1a1a;
+        border: 1px solid var(--border-glass);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+        border-radius: 20px;
+        width: 100%;
+        max-width: 550px;
+        padding: 30px;
+        text-align: center;
+        position: relative;
+        animation: modalPop 0.3s ease-out;
+        color: #eee;
+    }
+    @keyframes modalPop {
+        from { opacity: 0; transform: scale(0.95) translateY(10px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-content h2 {
+        color: var(--primary-gold);
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 15px;
+    }
+    .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 25px;
+        flex-wrap: wrap;
+    }
+    .modal-buttons button {
+        background: var(--bg-card);
+        color: var(--text-light);
+        border: 1px solid rgba(255,255,255,0.2);
+        padding: 10px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+        font-family: 'Cairo', sans-serif;
+    }
+    .modal-buttons button:hover {
+        background: var(--primary-gold);
+        color: #000;
+        border-color: var(--primary-gold);
+    }
+    .close-button {
+        position: absolute;
+        top: 20px; left: 20px; 
+        right: auto;
+        font-size: 1.5rem;
+        color: #666;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .close-button:hover { color: #fff; }
+
+    /* Modal Lists */
+    .search-history-list li, .shortener-history-list li {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        margin-bottom: 8px;
+        padding: 12px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .copy-button {
+        background: rgba(255,215,0,0.1);
+        color: var(--primary-gold);
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .copy-button:hover {
+        background: var(--primary-gold);
+        color: #000;
+    }
+
+    /* Warning Modal Specifics */
+    .aw-modal {
+        background: #111;
+        border: 1px solid #ff4444;
+        box-shadow: 0 0 50px rgba(255,0,0,0.1);
+    }
+    .aw-modal-header {
+        background: linear-gradient(90deg, #991b1b, #7f1d1d);
+        color: white;
+    }
+    .aw-btn-primary {
+        background: #ff4444;
+        color: white;
+    }
+    .aw-btn-primary:hover { background: #cc0000; }
+
+    /* Inputs in modals */
+    .modal input[type="text"], .modal input[type="url"], .modal select {
+        width: 100%;
+        padding: 12px;
+        background: #000;
+        border: 1px solid #333;
+        color: #fff;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-family: 'Cairo', sans-serif;
+        text-align: right;
+    }
+    .modal input:focus {
+        border-color: var(--primary-gold);
+        outline: none;
+    }
+
+  </style>
+</head>
+<body>
+
+    <!-- Floating Action Bar (Top Left) -->
+    <div class="top-left-buttons">
+        <div class="top-left-button" id="settingsBtn" title="الإعدادات">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="top-left-button" id="profileBtn" title="الملف الشخصي">
+            <i class="fas fa-id-badge"></i>
+        </div>
+        <div class="top-left-button" id="historyBtn" title="السجل">
+            <i class="fas fa-history"></i>
+        </div>
+        <div class="top-left-button" id="shortenLinkBtn" title="اختصار الروابط">
+            <i class="fas fa-cut"></i>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        
+        <!-- Header & Profile -->
+        <div class="header-content">
+            <div class="profile-container">
+                <img src="icons/mahmoud.jpg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="Mahmoud AboElfadl" class="profile-pic">
+            </div>
+            <div class="name-container">
+                <h1 class="typing-effect">Mahmoud AboElfadl</h1>
+            </div>
+            <p style="color: #666; font-size: 0.9em; margin-top: 5px; font-family: 'JetBrains Mono', 'Cairo'">مدير أنظمة | System Administrator</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="container">
+            <div class="search-area">
+                <input type="text" id="button-search-bar" class="search-input" placeholder="اكتب للبحث عن أداة...">
+                <button id="search-button" class="search-button"><i class="fas fa-search"></i> بحث</button>
+                <button id="reset-button" class="reset-button"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <h1>🇪🇬 AboElfadl Tools 🇪🇬</h1>
+            
+            <!-- Tool Grid -->
+            <div class="button-grid">
+                <!-- Original Links Preserved - Translated Text -->
+                <a href="https://aboelfadl-hacker.netlify.app/" class="tool-button">
+                    <img src="icons/MA_HACKER (3).jpeg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-user-secret\'></i> أبو الفضل هاكر'" alt="QR Icon"/>
+                    أبو الفضل هاكر
+                </a>
+                <a href="image_editor.html" class="tool-button">
+                    <i class="fas fa-palette"></i> محرر الصور
+                </a>
+                <a href="qr_generator.html" class="tool-button">
+                    <i class="fas fa-qrcode"></i> إنشاء باركود
+                </a>
+                <a href="temp_mail_visa.html" class="tool-button">
+                    <i class="fas fa-envelope-open-text"></i> بريد وفيزا مؤقتة
+                </a>
+                <a href="aboelfadl_downloud.html" class="tool-button">
+                    <i class="fas fa-download"></i> تحميل الوسائط
+                </a>
+                <a href="calculator.html" class="tool-button">
+                    <i class="fas fa-calculator"></i> الآلة الحاسبة
+                </a>
+                <a href="my_wifi_tools.html" class="tool-button">
+                    <i class="fas fa-wifi"></i> أدوات الواي فاي
+                </a>
+                <a href="link.html" class="tool-button">
+                    <i class="fas fa-globe"></i> إنشاء موقع شخصي
+                </a>
+                <a href="AboElfadlPro.html" class="tool-button">
+                    <i class="fas fa-tools"></i> أدوات احترافية
+                </a>
+                <a href="New_Gallery.html" class="tool-button">
+                    <i class="fas fa-photo-video"></i> معرض صور وفيديو
+                </a>
+                <a href="tools_TxT.html" class="tool-button">
+                    <i class="fas fa-edit"></i> أدوات النصوص
+                </a>
+                <a href="tools_DATE.html" class="tool-button">
+                    <i class="fas fa-calendar-alt"></i> أدوات التاريخ
+                </a>
+                <a href="Link_Ai.html" class="tool-button">
+                    <i class="fas fa-robot"></i> أدوات الروابط الذكية
+                </a>
+                <a href="fas_fa-icon.html" class="tool-button">
+                    <i class="fas fa-icons"></i> مكتبة الأيقونات
+                </a>
+                <a href="Proment_generator.html" class="tool-button">
+                    <i class="fas fa-terminal"></i> مولد الأوامر (Prompt)
+                </a>
+                <a href="link_html.html" class="tool-button">
+                    <i class="fas fa-link"></i> استخراج الروابط
+                </a>
+                <a href="metro.html" class="tool-button">
+                    <i class="fas fa-subway"></i> تذاكر المترو
+                </a>
+                <a href="Image_search.html" class="tool-button">
+                    <i class="fas fa-search-plus"></i> بحث بالصور
+                </a>
+                <a href="Learn_the_sound.html" class="tool-button">
+                    <i class="fas fa-microphone-alt"></i> معرفة الصوت
+                </a>
+                <a href="web_speech.html" class="tool-button">
+                    <i class="fas fa-volume-up"></i> تحويل النص لصوت
+                </a>
+                <a href="check_Camera.html" class="tool-button">
+                    <i class="fas fa-camera"></i> فحص الكاميرا
+                </a>
+                <a href="Electronic_signature.html" class="tool-button">
+                    <i class="fas fa-file-signature"></i> التوقيع الإلكتروني
+                </a>
+                <a href="Wheel_of_Fortune.html" class="tool-button">
+                    <i class="fas fa-dharmachakra"></i> عجلة الحظ
+                </a>
+                <a href="ifram.html" class="tool-button">
+                    <i class="fas fa-window-maximize"></i> أداة التضمين (IFrame)
+                </a>
+
+                <a href="c/cezma.html" class="tool-button">
+                    <i class="fas fa-headset"></i> خدمة عملاء CEZMA 
+                </a>
+
+                <a href="Islamic.html" class="tool-button">
+                    <i class="fas fa-mosque"></i> خدمات إسلامية 
+                </a>
+
+                <a href="ازرارر.html" class="tool-button">
+                    <i class="fas fa-code"></i> منشئ الأزرار
+                </a>
+
+                <a href="toolsai.html" class="tool-button">
+                    <i class="fas fa-brain"></i> أدوات الذكاء الاصطناعي
+                </a>
+                <a href="Search_youtube.html" class="tool-button">
+                    <i class="fab fa-youtube"></i> يوتيوب برو
+                </a>
+                <a href="ipp.html" class="tool-button">
+                    <i class="fas fa-map-marker-alt"></i> معرفة IP
+                </a>
+                <a href="ip.html" class="tool-button">
+                    <i class="fas fa-globe-americas"></i> تتبع IP
+                </a>
+                <a href="https://national-number.netlify.app/" class="tool-button">
+                    <i class="fas fa-id-card"></i> الرقم القومي
+                </a>
+                <a href="https://mac-os-aboelfadl.netlify.app/" class="tool-button">
+                    <i class="fab fa-apple"></i> محاكي ماك
+                </a> 
+                <a href="https://l0ck.netlify.app/" class="tool-button">
+                    <i class="fas fa-desktop"></i> قفل الشاشة (TG)
+                </a>
+                <a href="speed_test.html" class="tool-button">
+                    <i class="fas fa-tachometer-alt"></i> سرعة النت
+                </a>
+                <a href="screen.html" class="tool-button">
+                    <i class="fas fa-desktop"></i> دقة الشاشة
+                </a>
+                <a href="linktoqr.html" class="tool-button">
+                    <i class="fas fa-qrcode"></i> رابط إلى باركود
+                </a>
+                <a href="chat_whatsapp.html" class="tool-button">
+                    <i class="fab fa-whatsapp"></i> واتساب مباشر
+                </a>
+                <a href="cipher.html" class="tool-button">
+                    <i class="fas fa-user-secret"></i> تشفير البيانات
+                </a>
+                
+                <!-- Secret Buttons -->
+                <a href="#" class="tool-button hidden-by-default" id="secretButton" target="_blank">
+                    <i class="fas fa-key"></i> زر سري (com)
+                </a>
+                <a href="#" class="tool-button hidden-by-default" id="secretTvButton" target="_blank">
+                    <i class="fas fa-tv"></i> زر سري (TV)
+                </a>
+
+                <!-- Social Media Section -->
+                <div class="fake-test-heading" style="grid-column: 1 / -1;">وسائل التواصل الاجتماعي</div>
+
+                <a href="profile_links.html" class="tool-button"> 
+                    <i class="fas fa-link"></i> روابط البروفايل
+                </a>
+
+                <a href="social_media_links.html" class="tool-button"> 
+                    <i class="fab fa-facebook-f"></i> السوشيال ميديا
+                </a>
+                <a href="number_tools_ai_Whatsapp.html" class="tool-button"> 
+                    <i class="fab fa-whatsapp"></i> أدوات الأرقام
+                </a>
+
+                <a href="telegram /Telegram_channels.html" class="tool-button">
+                    <i class="fab fa-telegram-plane"></i> قنوات تيليجرام
+                </a>
+                <a href="WhatsApp_analyst.html" class="tool-button">
+                    <i class="fab fa-whatsapp"></i> محرر الواتساب
+                </a>
+                <a href="سيرفرات_تزويد_متابعين.html" class="tool-button">
+                    <i class="fas fa-server"></i> سيرفرات المتابعين
+                </a>
+
+                <!-- Call Section -->
+                <div class="fake-test-heading" style="grid-column: 1 / -1;">اتصالات وخدمات</div>
+                <a href="call/vodafone_cash.html" class="tool-button">
+                    <i class="fas fa-wallet"></i> فودافون كاش
+                </a>
+                <a href="call/number_eg.html" class="tool-button">
+                    <i class="fas fa-sim-card"></i> شركات الاتصالات
+                </a>
+
+                <!-- Coding Section -->
+                <div class="fake-test-heading" style="grid-column: 1 / -1;">التطوير والبرمجة</div>
+                <a href="https://codebeautify.org/source-code-viewer" class="tool-button" target="_blank">
+                    <i class="fas fa-code"></i> عارض السورس كود
+                </a>
+                <a href="code/AboElfadl-Edtior.html" class="tool-button">
+                    <i class="fas fa-laptop-code"></i> محرر الأكواد
+                </a>
+                <a href="code/tools.html" class="tool-button">
+                    <i class="fas fa-cogs"></i> أدوات الكود
+                </a>
+                <a href="code/HTML_EDITOR.html" class="tool-button">
+                    <i class="fab fa-html5"></i> محرر HTML                  
+                </a>
+                <a href="code/html_viewer.html" class="tool-button" target="_blank">
+                    <i class="fas fa-eye"></i> عارض HTML                  
+                </a>
+                <a href="code/VEDIO_CODE.html" class="tool-button" target="_blank">
+                    <i class="fas fa-video"></i> فيديوهات HTML                  
+                </a>
+
+                <!-- AI Chat Section -->
+                <div class="fake-test-heading" style="grid-column: 1 / -1;">روبوتات الذكاء الاصطناعي</div>
+                <a href="https://gemini.google.com/" class="tool-button">
+                    <i class="fas fa-brain"></i> Gemini AI
+                </a>
+                <a href="https://chatgpt.com/" class="tool-button">
+                    <i class="fas fa-robot"></i> ChatGPT
+                </a>
+                <a href="https://chat.mistral.ai/chat" class="tool-button">
+                    <i class="fas fa-wind"></i> Mistral AI
+                </a>
+                <a href="https://kimi.moonshot.cn/" class="tool-button">
+                    <i class="fas fa-moon"></i> Kimi AI
+                </a>
+                <a href="https://www.meta.ai/" class="tool-button">
+                    <i class="fab fa-meta"></i> Meta AI
+                </a>
+                <a href="https://grok.com/chat" class="tool-button">
+                    <i class="fas fa-rocket"></i> GROK
+                </a>
+
+                <!-- Games Section -->
+                <div class="fake-test-heading" style="grid-column: 1 / -1;">منطقة الترفيه</div>
+                <a href="GAMES/Search_for_games_and_apps.html" class="tool-button">
+                    <i class="fas fa-gamepad"></i> ألعاب وتطبيقات معدلة
+                </a>
+                <a href="GAMES/الكوتشينة.html" class="tool-button">
+                    <i class="fas fa-heart"></i> كوتشينة
+                </a>
+                <a href="GAMES/اونو.html" class="tool-button">
+                    <i class="fas fa-square"></i> اونو
+                </a>
+                <a href="GAMES/شطرانج.html" class="tool-button">
+                    <i class="fas fa-chess"></i> شطرنج
+                </a>
+                <a href="GAMES/دومينو.html" class="tool-button">
+                    <i class="fas fa-dice"></i> دومينو
+                </a>
+                <a href="GAMES/XO.html" class="tool-button">
+                    <i class="fas fa-times"></i> لعبة XO
+                </a>
+
+                <!-- FAKE TEST / Awareness Section -->
+                <div class="fake-test-heading" style="grid-column: 1 / -1;">⚠️ التوعية الأمنية (تجريبي) ⚠️</div>
+                <a href="https://free-tools-hacker.netlify.app/" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fas fa-user-secret" style="color: #ff4444;"></i> أدوات مجانية (اختبار)
+                </a>
+                <a href="fake.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fas fa-shield-alt" style="color: #ff4444;"></i> توعية من الاختراقات
+                </a>
+                <a href="fake/fake_facebook_login.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fab fa-facebook" style="color: #ff4444;"></i> تسجيل وهمي (فيسبوك)
+                </a> 
+                <a href="fake/INSTGRAM.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fab fa-instagram" style="color: #ff4444;"></i> تسجيل وهمي (انستجرام)
+                </a>
+                <a href="fake/fake_reward_form.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fas fa-gift" style="color: #ff4444;"></i> جوائز وهمية
+                </a>
+                <a href="fake/nbe_com_eg.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fas fa-university" style="color: #ff4444;"></i> صفحة بنك (محاكاة)
+                </a>
+                <a href="fake/LINKFAKE.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fas fa-bomb" style="color: #ff4444;"></i> تلغيم رابط
+                </a>
+                <a href="fake/hidelink.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fas fa-eye-slash" style="color: #ff4444;"></i> إخفاء رابط
+                </a>
+                <a href="fake/WHATSAPP.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fab fa-whatsapp" style="color: #ff4444;"></i> واتساب (محاكاة)
+                </a>
+                <a href="fake/TELEGRAM.html" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fab fa-telegram" style="color: #ff4444;"></i> تيليجرام (محاكاة)
+                </a>
+                <a href="https://islamic-services.netlify.app/" class="tool-button" style="border-color: #ff4444;">
+                    <i class="fas fa-moon" style="color: #ff4444;"></i> خدمات إسلامية
+                </a>
+                
+                <!-- Designer Footer -->
+                <div class="fake-test-heading" style="grid-column: 1 / -1;">تصميم وتطوير</div>
+                <a href="cv_mahmoud.html" class="tool-button" target="_blank" style="grid-column: 1 / -1; background: linear-gradient(45deg, #111, #333);">
+                   <i class="fas fa-copyright"></i> محمود أبو الفضل
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- MODALS (Hidden) - Copied logic with improved structure -->
+    <!-- ========================================================= -->
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeSettingsModalBtn">&times;</span>
+            <h2><i class="fab fa-telegram"></i> تحكم البوت</h2>
+            <div style="text-align: right; margin-bottom: 20px;">
+                <p>الاسم: <strong style="color: var(--primary-gold)">Free Tools Hack</strong></p>
+                <p>اسم المستخدم: <strong style="color: var(--primary-gold)">dera3kdigital_bot</strong></p>
+            </div>
+            <div class="modal-buttons">
+                <button id="cancelModalBtn" style="background: transparent; border: 1px solid #555;">إلغاء</button>
+                <button id="confirmRedirectBtn">فتح الموقع</button>
+                <button id="coonfirmRedirectBtn">فتح البوت</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeProfileModalBtn">&times;</span>
+            <h2><i class="fas fa-user-circle"></i> روابط الملف الشخصي</h2>
+
+            <select id="profileSectionSelect">
+                <option value="linkSiteMeSection">روابطي (Link Me)</option>
+                <option value="hackerSection">أدوات الهكر</option>
+                <option value="servicesSection">خدمات عامة</option>
+            </select>
+
+            <!-- Sections Wrapper -->
+            <div id="linkSiteMeSection" class="modal-section">
+                <ul class="search-history-list"> <!-- Reusing list style -->
+                    <li>
+                        <a href="https://news-technolog-hack.blogspot.com/" target="_blank" style="color: white; text-decoration:none;">مدونة أخبار التقنية</a>
+                        <button class="copy-button" data-url="https://news-technolog-hack.blogspot.com/"><i class="fas fa-copy"></i></button>
+                    </li>
+                    <li>
+                        <a href="https://mahmoud-aboelfadl.my.canva.site/" target="_blank" style="color: white; text-decoration:none;">محمود أبو الفضل (Canva)</a>
+                        <button class="copy-button" data-url="https://mahmoud-aboelfadl.my.canva.site/"><i class="fas fa-copy"></i></button>
+                    </li>
+                    <li>
+                        <a href="https://sites.google.com/view/king-web-ai/HOME-PAGE" target="_blank" style="color: white; text-decoration:none;">الملك ويب AI</a>
+                        <button class="copy-button" data-url="https://sites.google.com/view/king-web-ai/HOME-PAGE"><i class="fas fa-copy"></i></button>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="hackerSection" class="modal-section" style="display: none;">
+                <ul class="search-history-list">
+                    <li>
+                        <a href="https://downev.com/profileviewer.html" target="_blank" style="color:white;text-decoration:none">عارض الصور الشخصية</a>
+                        <button class="copy-button" data-url="https://downev.com/profileviewer.html"><i class="fas fa-copy"></i></button>
+                    </li>
+                    <li>
+                        <a href="https://online-hackers.com/" target="_blank" style="color:white;text-decoration:none">هاكرز أونلاين</a>
+                        <button class="copy-button" data-url="https://online-hackers.com/"><i class="fas fa-copy"></i></button>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="servicesSection" class="modal-section" style="display: none;">
+                <ul class="search-history-list">
+                    <li>
+                        <a href="https://www.nbe.com.eg/CEM/Default.aspx?lang=AR" target="_blank" style="color:white;text-decoration:none">البنك الأهلي - حجز</a>
+                        <button class="copy-button" data-url="https://www.nbe.com.eg/CEM/Default.aspx?lang=AR"><i class="fas fa-copy"></i></button>
+                    </li>
+                    <li>
+                        <a href="https://www.hcww.com.eg/bill-payment/" target="_blank" style="color:white;text-decoration:none">دفع فاتورة المياة</a>
+                        <button class="copy-button" data-url="https://www.hcww.com.eg/bill-payment/"><i class="fas fa-copy"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search History Modal -->
+    <div id="searchHistoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeHistoryModalBtn">&times;</span>
+            <h2><i class="fas fa-history"></i> سجل البحث</h2>
+            <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                <input type="text" id="searchHistoryFilter" placeholder="تصفية..." style="margin:0;">
+                <select id="searchHistorySort" style="width: auto; margin:0;">
+                    <option value="date-desc">الأحدث</option>
+                    <option value="date-asc">الأقدم</option>
+                    <option value="most-used">الأكثر استخداماً</option>
+                </select>
+            </div>
+            <button id="deleteSelectedSearchHistoryBtn" style="width:100%; background-color: #b91c1c; margin-bottom:10px; color:white; border:none; padding:8px; border-radius:5px; cursor:pointer;">حذف المحدد</button>
+            
+            <ul id="historyList" class="search-history-list" style="max-height: 250px; overflow-y: auto; text-align: right;"></ul>
+            
+            <div class="modal-buttons">
+                <button id="clearHistoryBtn" style="background: #b91c1c; border-color:#b91c1c;">مسح الكل</button>
+                <button id="closeHistoryModalBottomBtn">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shortener Modal -->
+    <div id="shortenerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeShortenerModalBtn">&times;</span>
+            <h2><i class="fas fa-link"></i> اختصار الروابط</h2>
+
+            <input type="url" id="originalLinkInput" placeholder="https://example.com" required>
+            <button id="shortenButton" style="width: 100%; background: var(--primary-gold); color: black; font-weight: bold; padding: 12px; border: none; border-radius: 8px; cursor: pointer;">اختصار الآن</button>
+            
+            <div id="shortenedLinkOutput" style="margin-top: 15px; min-height: 30px; color: #4ade80; font-family: monospace;"></div>
+            <p id="shortenerError" style="color: #ef4444; font-size: 0.9em;"></p>
+
+            <div style="margin-top: 20px; border-top: 1px solid #333; padding-top: 10px;">
+                <h3>السجل</h3>
+                <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                    <input type="text" id="shortenerHistoryFilter" placeholder="بحث في الروابط..." style="margin:0;">
+                    <select id="shortenerHistorySort" style="width: auto; margin:0;">
+                        <option value="date-desc">الأحدث</option>
+                    </select>
+                </div>
+                 <button id="deleteSelectedShortenerHistoryBtn" style="width:100%; background-color: #b91c1c; margin-bottom:10px; color:white; border:none; padding:8px; border-radius:5px; cursor:pointer;">حذف المحدد</button>
+
+                <ul id="shortenerHistoryList" class="shortener-history-list" style="max-height: 200px; overflow-y: auto;"></ul>
+                
+                <div class="modal-buttons">
+                    <button id="clearShortenerHistoryBtn" style="background: #b91c1c; border-color:#b91c1c;">مسح السجل</button>
+                    <button id="closeShortenerModalBottomBtn">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Awareness Modal (Warning) -->
+    <div id="awarenessModalBackdrop" class="aw-modal-backdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+      <div class="aw-modal" style="width: 100%; max-width: 600px; background: #000; border: 1px solid #ff4444; border-radius: 12px; overflow: hidden; font-family: 'Cairo', sans-serif;">
+        <div class="aw-modal-header" style="background: #b91c1c; padding: 15px; display: flex; align-items: center; gap: 15px; color: white;">
+          <div style="font-size: 24px;">⚠️</div>
+          <div>
+            <div style="font-weight: 900; font-size: 18px;">تنبيه أمني هام</div>
+            <div style="font-size: 13px; opacity: 0.9;">إخلاء مسؤولية قانونية</div>
+          </div>
+        </div>
+        <div class="aw-modal-body" style="padding: 20px; color: #e5e5e5; line-height: 1.6;">
+          <p><strong>تحذير:</strong> الأدوات المعروضة هنا (قسم Fake Test) هي لأغراض تعليمية وتوعوية فقط.</p>
+          <p>استخدام هذه الأدوات للإضرار بالآخرين يعرضك للمساءلة القانونية الكاملة. المطور يخلي مسؤوليته تماماً عن أي سوء استخدام.</p>
+        </div>
+        <div class="aw-modal-footer" style="padding: 15px; display: flex; justify-content: space-between; align-items: center; background: #111;">
+          <label style="color: #999; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+            <input id="awDontShowAgain" type="checkbox"> لا تظهر مجدداً
+          </label>
+          <div style="display: flex; gap: 10px;">
+             <button id="awCloseBtn" style="background: transparent; color: white; border: 1px solid #555; padding: 8px 15px; border-radius: 6px; cursor: pointer;">متابعة</button>
+             <button id="awCloseAndSaveBtn" style="background: #b91c1c; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer;">موافق وحفظ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- JAVASCRIPT Logic (Preserved Completely) -->
+    <!-- ========================================================= -->
+<script>
+/* Awareness Modal Script */
+(function(){
+  const BACKDROP_ID = 'awarenessModalBackdrop';
+  const STORAGE_KEY = 'awareness_modal_hide'; 
+
+  function closeModal(){
+    const bd = document.getElementById(BACKDROP_ID);
+    if (!bd) return;
+    bd.style.display = 'none';
+  }
+
+  function showModal(){
+    const bd = document.getElementById(BACKDROP_ID);
+    if (!bd) return;
+    bd.style.display = 'flex';
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    try {
+      const suppressed = localStorage.getItem(STORAGE_KEY);
+      if (suppressed === '1') {
+        closeModal();
+        return;
+      }
+      showModal();
+
+      document.getElementById('awCloseBtn').addEventListener('click', closeModal);
+      document.getElementById('awCloseAndSaveBtn').addEventListener('click', function(){
+        localStorage.setItem(STORAGE_KEY, '1');
+        closeModal();
+      });
+    } catch (err) { console.error(err); }
+  });
+})();
+
+/* Main Application Script */
+        const settingsBtn = document.getElementById('settingsBtn');
+        const profileBtn = document.getElementById('profileBtn');
+        const historyBtn = document.getElementById('historyBtn');
+        const shortenLinkBtn = document.getElementById('shortenLinkBtn');
+
+        const settingsModal = document.getElementById('settingsModal');
+        const profileModal = document.getElementById('profileModal');
+        const searchHistoryModal = document.getElementById('searchHistoryModal');
+        const shortenerModal = document.getElementById('shortenerModal');
+
+        const closeSettingsModalBtn = document.getElementById('closeSettingsModalBtn');
+        const closeProfileModalBtn = document.getElementById('closeProfileModalBtn');
+        const closeHistoryModalBtn = document.getElementById('closeHistoryModalBtn');
+        const closeShortenerModalBtn = document.getElementById('closeShortenerModalBtn');
+
+        const cancelModalBtn = document.getElementById('cancelModalBtn');
+        const confirmRedirectBtn = document.getElementById('confirmRedirectBtn');
+        
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        const closeHistoryModalBottomBtn = document.getElementById('closeHistoryModalBottomBtn');
+        const historyList = document.getElementById('historyList');
+        const searchHistoryFilterInput = document.getElementById('searchHistoryFilter');
+        const searchHistorySortSelect = document.getElementById('searchHistorySort');
+        const deleteSelectedSearchHistoryBtn = document.getElementById('deleteSelectedSearchHistoryBtn');
+
+        const originalLinkInput = document.getElementById('originalLinkInput');
+        const shortenButton = document.getElementById('shortenButton');
+        const shortenedLinkOutput = document.getElementById('shortenedLinkOutput');
+        const shortenerError = document.getElementById('shortenerError');
+        const shortenerHistoryList = document.getElementById('shortenerHistoryList');
+        const clearShortenerHistoryBtn = document.getElementById('clearShortenerHistoryBtn');
+        const closeShortenerModalBottomBtn = document.getElementById('closeShortenerModalBottomBtn');
+        const shortenerHistoryFilterInput = document.getElementById('shortenerHistoryFilter');
+        const shortenerHistorySortSelect = document.getElementById('shortenerHistorySort');
+        const deleteSelectedShortenerHistoryBtn = document.getElementById('deleteSelectedShortenerHistoryBtn');
+
+
+        const searchInput = document.getElementById('button-search-bar');
+        const searchButton = document.getElementById('search-button');
+        const resetButton = document.getElementById('reset-button');
+        const allToolButtons = document.querySelectorAll('.button-grid .tool-button');
+        const secretButton = document.getElementById('secretButton');
+        const secretTvButton = document.getElementById('secretTvButton');
+
+        const profileSectionSelect = document.getElementById('profileSectionSelect');
+        const linkSiteMeSection = document.getElementById('linkSiteMeSection');
+        const hackerSection = document.getElementById('hackerSection');
+        const servicesSection = document.getElementById('servicesSection');
+        const profileSections = [linkSiteMeSection, hackerSection, servicesSection];
+
+        const TINYURL_API_KEY = 'rM3pBN61NEm4mxdQOwqm8XgQFc68mbqaSgnXA1nTsTIEhv3Qau64Cj3M5v19';
+
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        let shortenedLinksHistory = JSON.parse(localStorage.getItem('shortenedLinksHistory')) || [];
+
+        function fuzzyMatch(pattern, text) {
+            pattern = pattern.toLowerCase();
+            text = text.toLowerCase();
+            let patternIdx = 0; let textIdx = 0; let lastMatchIdx = -1; let score = 0;
+            while (patternIdx < pattern.length && textIdx < text.length) {
+                if (pattern[patternIdx] === text[textIdx]) {
+                    score += (lastMatchIdx === -1 || textIdx === lastMatchIdx + 1) ? 2 : 1;
+                    lastMatchIdx = textIdx; patternIdx++;
+                } else { score -= 0.1; }
+                textIdx++;
+            }
+            return patternIdx === pattern.length ? score : -1;
+        }
+
+        function addToSearchHistory(term) {
+            if (!term) return;
+            let existingItemIndex = searchHistory.findIndex(item => item.term === term);
+            if (existingItemIndex !== -1) {
+                searchHistory[existingItemIndex].uses = (searchHistory[existingItemIndex].uses || 0) + 1;
+                searchHistory[existingItemIndex].timestamp = new Date().toISOString();
+                const item = searchHistory.splice(existingItemIndex, 1)[0];
+                searchHistory.unshift(item);
+            } else {
+                searchHistory.unshift({ term: term, timestamp: new Date().toISOString(), uses: 1 });
+            }
+            if (searchHistory.length > 10000) searchHistory.pop();
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        }
+
+        function displaySearchHistory() {
+            historyList.innerHTML = '';
+            const filterText = searchHistoryFilterInput.value.toLowerCase();
+            let filteredHistory = searchHistory.filter(item => fuzzyMatch(filterText, item.term || '') !== -1);
+            const sortOrder = searchHistorySortSelect.value;
+            filteredHistory.sort((a, b) => {
+                if (sortOrder === 'date-desc') return new Date(b.timestamp) - new Date(a.timestamp);
+                if (sortOrder === 'date-asc') return new Date(a.timestamp) - new Date(b.timestamp);
+                if (sortOrder === 'most-used') return (b.uses || 0) - (a.uses || 0);
+                return 0;
+            });
+
+            if (filteredHistory.length === 0) {
+                historyList.innerHTML = '<li><span>لا يوجد نتائج.</span></li>';
+            } else {
+                filteredHistory.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.dataset.index = searchHistory.indexOf(item);
+                    li.innerHTML = `
+                        <input type="checkbox" class="history-checkbox">
+                        <span style="flex-grow:1; margin-right:10px;">${item.term} <small style="color:#666">(${item.uses || 0})</small></span>
+                        <button class="copy-button" data-text="${item.term}"><i class="fas fa-copy"></i></button>
+                    `;
+                    historyList.appendChild(li);
+                });
+                attachCopyListenersToHistory();
+            }
+        }
+
+        function attachCopyListenersToHistory() {
+            document.querySelectorAll('#historyList .copy-button').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    await navigator.clipboard.writeText(e.currentTarget.dataset.text);
+                    alert('تم النسخ');
+                });
+            });
+        }
+
+        function addToShortenedLinksHistory(original, shortened) {
+            let existingItemIndex = shortenedLinksHistory.findIndex(item => item.original === original);
+            if (existingItemIndex !== -1) {
+                shortenedLinksHistory[existingItemIndex].uses = (shortenedLinksHistory[existingItemIndex].uses || 0) + 1;
+                shortenedLinksHistory[existingItemIndex].timestamp = new Date().toISOString();
+                const item = shortenedLinksHistory.splice(existingItemIndex, 1)[0];
+                shortenedLinksHistory.unshift(item);
+            } else {
+                shortenedLinksHistory.unshift({ original, shortened, timestamp: new Date().toISOString(), uses: 1 });
+            }
+            if (shortenedLinksHistory.length > 20) shortenedLinksHistory.pop();
+            localStorage.setItem('shortenedLinksHistory', JSON.stringify(shortenedLinksHistory));
+        }
+
+        function displayShortenedLinksHistory() {
+            shortenerHistoryList.innerHTML = '';
+            const filterText = shortenerHistoryFilterInput.value.toLowerCase();
+            let filtered = shortenedLinksHistory.filter(item => fuzzyMatch(filterText, item.original||'') !== -1 || fuzzyMatch(filterText, item.shortened||'') !== -1);
+            
+            if (filtered.length === 0) {
+                shortenerHistoryList.innerHTML = '<li><span>لا يوجد روابط.</span></li>';
+            } else {
+                filtered.forEach(item => {
+                    const li = document.createElement('li');
+                    li.dataset.originalIndex = shortenedLinksHistory.indexOf(item);
+                    li.innerHTML = `
+                        <input type="checkbox" class="history-checkbox">
+                        <div style="flex-grow:1; text-align:right; margin:0 10px;">
+                            <div style="font-size:0.8em; color:#888; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:200px;">${item.original}</div>
+                            <a href="${item.shortened}" target="_blank" style="color:#4ade80;">${item.shortened}</a>
+                        </div>
+                        <button class="copy-button" data-text="${item.shortened}"><i class="fas fa-copy"></i></button>
+                    `;
+                    shortenerHistoryList.appendChild(li);
+                });
+                attachCopyListenersToShortenerHistory();
+            }
+        }
+        
+        function attachCopyListenersToShortenerHistory() {
+             document.querySelectorAll('#shortenerHistoryList .copy-button').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    await navigator.clipboard.writeText(e.currentTarget.dataset.text);
+                    alert('تم النسخ');
+                });
+            });
+        }
+
+        function displayProfileSection(sectionId) {
+            profileSections.forEach(sec => sec.style.display = (sec.id === sectionId) ? 'block' : 'none');
+        }
+
+        settingsBtn.onclick = () => settingsModal.style.display = 'flex';
+        profileBtn.onclick = () => { profileModal.style.display = 'flex'; profileSectionSelect.value = 'linkSiteMeSection'; displayProfileSection('linkSiteMeSection'); };
+        profileSectionSelect.onchange = (e) => displayProfileSection(e.target.value);
+        historyBtn.onclick = () => { displaySearchHistory(); searchHistoryModal.style.display = 'flex'; };
+        shortenLinkBtn.onclick = () => { 
+            originalLinkInput.value = ''; shortenedLinkOutput.innerHTML = ''; shortenerError.textContent = ''; 
+            displayShortenedLinksHistory(); shortenerModal.style.display = 'flex'; 
+        };
+
+        [closeSettingsModalBtn, cancelModalBtn].forEach(b => b.onclick = () => settingsModal.style.display = 'none');
+        closeProfileModalBtn.onclick = () => profileModal.style.display = 'none';
+        [closeHistoryModalBtn, closeHistoryModalBottomBtn].forEach(b => b.onclick = () => searchHistoryModal.style.display = 'none');
+        [closeShortenerModalBtn, closeShortenerModalBottomBtn].forEach(b => b.onclick = () => shortenerModal.style.display = 'none');
+
+        window.onclick = (e) => {
+            if (e.target == settingsModal) settingsModal.style.display = 'none';
+            if (e.target == profileModal) profileModal.style.display = 'none';
+            if (e.target == searchHistoryModal) searchHistoryModal.style.display = 'none';
+            if (e.target == shortenerModal) shortenerModal.style.display = 'none';
+        };
+
+        clearHistoryBtn.onclick = () => {
+            if(confirm('مسح السجل بالكامل؟')) {
+                searchHistory = []; localStorage.removeItem('searchHistory'); displaySearchHistory();
+            }
+        };
+
+        deleteSelectedSearchHistoryBtn.onclick = () => {
+             const checkboxes = document.querySelectorAll('#historyList .history-checkbox:checked');
+             if(checkboxes.length && confirm('حذف المحدد؟')) {
+                 const indices = Array.from(checkboxes).map(cb => parseInt(cb.closest('li').dataset.index)).sort((a,b)=>b-a);
+                 indices.forEach(i => searchHistory.splice(i,1));
+                 localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                 displaySearchHistory();
+             }
+        };
+
+        clearShortenerHistoryBtn.onclick = () => {
+            if(confirm('مسح سجل الروابط؟')) {
+                shortenedLinksHistory = []; localStorage.removeItem('shortenedLinksHistory'); displayShortenedLinksHistory();
+            }
+        };
+
+        deleteSelectedShortenerHistoryBtn.onclick = () => {
+             const checkboxes = document.querySelectorAll('#shortenerHistoryList .history-checkbox:checked');
+             if(checkboxes.length && confirm('حذف المحدد؟')) {
+                 const indices = Array.from(checkboxes).map(cb => parseInt(cb.closest('li').dataset.originalIndex)).sort((a,b)=>b-a);
+                 indices.forEach(i => shortenedLinksHistory.splice(i,1));
+                 localStorage.setItem('shortenedLinksHistory', JSON.stringify(shortenedLinksHistory));
+                 displayShortenedLinksHistory();
+             }
+        };
+
+        confirmRedirectBtn.onclick = () => window.open('https://dera3kdigital_.eyoo.org/', '_blank');
+        document.getElementById('coonfirmRedirectBtn').onclick = () => window.open('https://t.me/dera3kdigital_bot/', '_blank');
+
+        function performButtonSearch() {
+            const term = searchInput.value.trim().toLowerCase();
+            let found = false;
+            if(term) addToSearchHistory(term);
+            
+            allToolButtons.forEach(btn => {
+                const txt = btn.textContent.toLowerCase();
+                btn.classList.remove('highlight-button');
+                
+                if(btn.id === 'secretButton' && term === 'com') {
+                    btn.style.display = 'flex'; btn.classList.add('highlight-button'); found = true;
+                } else if(btn.id === 'secretTvButton' && term === 'tv') {
+                    btn.style.display = 'flex'; btn.classList.add('highlight-button'); found = true;
+                } else {
+                    if (btn.id !== 'secretButton' && btn.id !== 'secretTvButton') {
+                         if(!term || fuzzyMatch(term, txt) !== -1) {
+                             btn.style.display = 'flex';
+                         } else {
+                             btn.style.display = 'none';
+                         }
+                    }
+                }
+            });
+        }
+
+        searchButton.onclick = performButtonSearch;
+        searchInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') performButtonSearch(); });
+        resetButton.onclick = () => {
+            searchInput.value = '';
+            allToolButtons.forEach(btn => {
+                btn.classList.remove('highlight-button');
+                if(btn.id !== 'secretButton' && btn.id !== 'secretTvButton') btn.style.display = 'flex';
+                else btn.style.display = 'none';
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+             if (secretButton) secretButton.style.display = 'none';
+             if (secretTvButton) secretTvButton.style.display = 'none';
+             
+             document.querySelectorAll('.copy-button').forEach(btn => {
+                 btn.onclick = async (e) => {
+                     await navigator.clipboard.writeText(e.currentTarget.dataset.url || e.currentTarget.dataset.text);
+                     alert('تم النسخ');
+                 }
+             });
+        });
+        
+        if(secretButton) secretButton.onclick = (e) => { e.preventDefault(); window.open('https://tinyurl.com/yu6mn428', '_blank'); };
+        if(secretTvButton) secretTvButton.onclick = (e) => { e.preventDefault(); window.open('https://tinyurl.com/fsx3whze', '_blank'); };
+
+        function isValidUrl(s) { try { new URL(s); return true; } catch(e){ return false; } }
+
+        shortenButton.onclick = async () => {
+            const url = originalLinkInput.value.trim();
+            if(!url || !isValidUrl(url)) { shortenerError.textContent = 'رابط غير صحيح'; return; }
+            
+            try {
+                const res = await fetch('https://api.tinyurl.com/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TINYURL_API_KEY}` },
+                    body: JSON.stringify({ url: url })
+                });
+                const data = await res.json();
+                if(res.ok && data.data) {
+                     const short = data.data.tiny_url;
+                     shortenedLinkOutput.innerHTML = `<a href="${short}" target="_blank">${short}</a>`;
+                     addToShortenedLinksHistory(url, short);
+                     displayShortenedLinksHistory();
+                } else {
+                    shortenerError.textContent = 'خطأ في الخدمة';
+                }
+            } catch(e) { shortenerError.textContent = 'خطأ اتصال'; }
+        };
+
+        searchHistoryFilterInput.oninput = displaySearchHistory;
+        searchHistorySortSelect.onchange = displaySearchHistory;
+        shortenerHistoryFilterInput.oninput = displayShortenedLinksHistory;
+        shortenerHistorySortSelect.onchange = displayShortenedLinksHistory;
+
+</script>
+</body>
+</html>
+
+
